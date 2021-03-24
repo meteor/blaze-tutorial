@@ -2,7 +2,7 @@
 title: Home
 ---
 
-The Meteor React Tutorial is where to start learning the basics of Meteor with React.
+The Meteor Blaze Tutorial is where to start learning the basics of Meteor with Blaze.
 
 If you want to know more about Meteor check our [website](https://www.meteor.com)
 
