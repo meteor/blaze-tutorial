@@ -192,4 +192,7 @@ Now your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step01-mobile-with-meta-tags.png"/>
 
-In the next step, we will see how we can use helpers to make our templates display dynamic data from a database collection.
+
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
+
+In the next step we are going to work with our MongoDB database to store our tasks.
