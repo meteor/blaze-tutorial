@@ -6,59 +6,59 @@ Up until now you have only inserted documents into our collection. Let's take a 
 
 ## 4.1: Add Checkbox
 
-First, you need to add a `checkbox` element to your `Task` component.
+First, you need to add a `checkbox` element to your `task` template.
 
-> Be sure to add the `readOnly` attribute since we are not using `onChange` to update the state.
->
-> We also have to force our `checked` prop to a `boolean` since React understands that an `undefined` value as inexistent, therefore causing the component to switch from uncontrolled to a controlled one.
->
-> You are also invited to experiment and see how the app behaves for learning purposes.
+Also, let's create a new file to our `task` template, so we can start to separate the logic in our app.
 
-You also want to receive a callback, a function that will be called when the checkbox is clicked.
+`imports/ui/Task.html`
 
-`imports/ui/Task.jsx`
-
-```js
-import React from 'react';
-
-export const Task = ({ task, onCheckboxClick }) => {
-  return (
+```html
+<template name="task">
     <li>
-      <input
-        type="checkbox"
-        checked={!!task.isChecked}
-        onClick={() => onCheckboxClick(task)}
-        readOnly
-      />
-      <span>{task.text}</span>
+        <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+        <span>{{text}}</span>
     </li>
-  );
-};
+</template>
 ```
 
 ## 4.2: Toggle Checkbox
 
 Now you can update your task document toggling its `isChecked` field.
 
-Create a function to change your document and pass it along to your `Task` component.
+Create a new file called `Task.js` so we can have our handlers to the `task` template: 
 
-`imports/ui/App.jsx`
+`imports/ui/Task.js`
 
 ```js
-const toggleChecked = ({ _id, isChecked }) => {
-  TasksCollection.update(_id, {
-    $set: {
-      isChecked: !isChecked
-    }
-  })
-};
+import { Template } from 'meteor/templating';
 
-export const App = () => {
-  ..
-  <ul>
-    { tasks.map(task => <Task key={ task._id } task={ task } onCheckboxClick={toggleChecked} />) }
-  </ul>
-  ..
+import { TasksCollection } from "../api/TasksCollection";
+
+import './Task.html';
+
+Template.task.events({
+  'click .toggle-checked'() {
+    // Set the checked property to the opposite of its current value
+    TasksCollection.update(this._id, {
+      $set: { isChecked: !this.isChecked },
+    });
+  },
+});
+```
+
+Now, let's import our new `Task.js` file inside `App.js`:
+
+`imports/ui/App.js`
+
+```js
+import { Template } from 'meteor/templating';
+import { TasksCollection } from "../api/TasksCollection";
+import './App.html';
+import './Task.js';
+
+Template.body.helpers({
+
+...
 ```
 
 Your app should look like this:
@@ -69,46 +69,42 @@ Your app should look like this:
 
 You can remove tasks with just a few lines of code.
 
-First add a button after text in your `Task` component and receive a callback function.
+First add a button after text in your `task` template and receive:
 
-`imports/ui/Task.jsx`
+`imports/ui/Task.html`
 
-```js
-import React from 'react';
-
-export const Task = ({ task, onCheckboxClick, onDeleteClick }) => {
-  return (
-..
-      <span>{task.text}</span>
-      <button onClick={ () => onDeleteClick(task) }>&times;</button>
-..
+```html
+<template name="task">
+    <li>
+        <input type="checkbox" checked="{{isChecked}}" class="toggle-checked" />
+        <span>{{text}}</span>
+        <button class="delete">&times;</button>
+...
 ```
 
-Now add the removal logic in the `App`, you need to have a function to delete the task and provide this function in your callback property in the `Task` component:
+Now add the removal logic in the `Task.js`. It will be just a new event to the `task` template that is activated when the user clicks in a delete button, that is, any button with the class `delete`:
 
-`imports/ui/App.jsx`
+`imports/ui/Task.js`
 
 ```js
-const deleteTask = ({ _id }) => TasksCollection.remove(_id);
+...
 
-export const App = () => {
-  ..
-  <ul>
-    { tasks.map(task => <Task
-      key={ task._id }
-      task={ task }
-      onCheckboxClick={toggleChecked}
-      onDeleteClick={deleteTask}
-    />) }
-  </ul>
-  ..
-}
+Template.task.events({
+  ...,
+  'click .delete'() {
+    TasksCollection.remove(this._id);
+  },
+});
 ```
 
 Your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step04-delete-button.png"/>
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step04) 
+## 4.4: Getting data in event handlers
+
+Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that is available in the client side. Once we have the `_id`, we can use update and remove to modify the relevant task, and that's why our code do update and remove a task is working in our app.
+
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step04) 
 
 In the next step we are going to improve the look of your app using CSS with Flexbox.
