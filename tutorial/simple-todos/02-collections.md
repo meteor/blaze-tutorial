@@ -63,13 +63,13 @@ So you are importing the `TasksCollection` and adding a few tasks on it iteratin
 
 Now comes the fun part, you will render the tasks saved in our database. With Blaze that will be pretty simple to do.  
 
-On your file `body.js`, import the `TasksCollection` file and, instead of return a static array, return the tasks saved in the database:
+On your file `App.js`, import the `TasksCollection` file and, instead of return a static array, return the tasks saved in the database:
 
-`imports/ui/body.js`
+`imports/ui/App.js`
 ```javascript
 import { Template } from 'meteor/templating';
 import { TasksCollection } from "../api/TasksCollection";
-import './body.html';
+import './App.html';
 
 Template.body.helpers({
   tasks() {

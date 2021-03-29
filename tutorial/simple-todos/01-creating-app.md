@@ -85,7 +85,7 @@ First, let's remove the body from our HTML entry-point (leaving just the `<head>
 
 Create a new directory with the name `imports` inside `simple-todos-blaze` folder. Then we create some new files in the `imports/` directory:
 
-`imports/ui/body.html`
+`imports/ui/App.html`
 
 ```html
 <body>
@@ -111,16 +111,16 @@ Now we need the data to render on this page.
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet let's define some sample data which will be used shortly to render a list of tasks. It will be an array, and you can call it `tasks`. Go ahead and create a new file called `body.js` on your file `ui` and type this code on it:
+As you are not connecting to your server and your database yet let's define some sample data which will be used shortly to render a list of tasks. It will be an array, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your file `ui` and type this code on it:
 
-`imports/ui/body.js`
+`imports/ui/App.js`
 
 ``` js
 import { Template } from 'meteor/templating';
  
-import './body.html';
+import './App.html';
  
-Template.body.helpers({
+Template.app.helpers({
   tasks: [
     { text: 'This is task 1' },
     { text: 'This is task 2' },
@@ -132,10 +132,10 @@ Template.body.helpers({
 You can put anything as your `text` property on each task. Be creative!
 
 
-Inside our front-end JavaScript entry-point file, `client/main.js`, we'll remove the rest of the code and import `imports/ui/body.js`:
+Inside our front-end JavaScript entry-point file, `client/main.js`, we'll remove the rest of the code and import `imports/ui/App.js`:
 
 ``` js
-import '../imports/ui/body.js';
+import '../imports/ui/App.js';
 ```
 
 You can read more about how imports work and how to structure your code in the [Application Structure article](https://guide.meteor.com/structure.html) of the Meteor Guide.
