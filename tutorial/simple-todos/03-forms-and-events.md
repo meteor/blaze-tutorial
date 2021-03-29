@@ -8,58 +8,49 @@ One of the main ways in which a user can insert or edit data in a website is thr
 
 ## 3.1: Create Task Form
 
-First we need to create a simple form component to encapsulate our logic. As you can see we set up the `useState` React Hook.
+First we need to create a simple form component to encapsulate our logic.
 
-Please note the _array destructuring_ `[text, setText]`, where `text` is the stored value which we want to use, which in this case will be a _string_; and `setText` is a _function_ used to update that value.
+Create a new template called `form` inside the `App.html` file and inside of the new template we'll add an input field and a button:
 
-Create a new file `TaskForm.jsx` in your `ui` folder.
+`imports/ui/App.html`
+```html
 
-`imports/ui/TaskForm.jsx`
-```js
-import React, { useState } from 'react';
- 
-export const TaskForm = () => {
-  const [text, setText] = useState("");
- 
-  return (
-    <form className="task-form">
-      <input
-        type="text"
-        placeholder="Type to add new tasks"
-      />
- 
-      <button type="submit">Add Task</button>
+...
+
+<template name="form">
+    <form class="task-form">
+        <input type="text" name="text" placeholder="Type to add new tasks" />
+        <button type="submit">Add Task</button>
     </form>
-  );
-};
+</template>
 ```
 
-## 3.2: Update the App component
+## 3.2: Update the body element
 
-Then we can simply add this to our `App` component above your list of tasks:
+Then we can simply add this to our `body` component above your list of tasks:
 
-`imports/ui/App.jsx`
-```js
-import { useTracker } from 'meteor/react-meteor-data';
-import { Task } from './Task';
-import { TasksCollection } from '/imports/api/TasksCollection';
-import { TaskForm } from './TaskForm';
- 
-export const App = () => {
-  const tasks = useTracker(() => TasksCollection.find({}).fetch());
+`imports/ui/App.html`
+```html
 
-  return (
-    <div>
-      <h1>Welcome to Meteor!</h1>
+...
 
-      <TaskForm/>
+<body>
+    <div class="container">
+        <header>
+            <h1>Todo List</h1>
+        </header>
 
-      <ul>
-        { tasks.map(task => <Task key={ task._id } task={ task }/>) }
-      </ul>
+        {{> form }}
+
+        <ul>
+            {{#each tasks}}
+                {{> task}}
+            {{/each}}
+        </ul>
     </div>
-  );
-};
+</body>
+
+...
 
 ```
 
@@ -74,63 +65,70 @@ You also can style it as you wish. For now, we only need some margin at the top 
 }
 ```
 
-## 3.4: Add Submit Handler
+## 3.4: Add Submit Listener
 
-Now you can attach a submit handler to your form using the `onSubmit` event; and also plug your React Hook into the `onChange` event present in the input element.
+Now we need to add a listener to the `submit` event on the form:
 
-As you can see you are using the `useState` React Hook to store the `value` of your `<input>` element. Note that you also need to set your `value` attribute to the `text` constant as well, this will allow the `input` element to stay in sync with our hook.
-
-> In more complex applications you might want to implement some `debounce` or `throttle` logic if there many calculations happening between potentially frequent events like `onChange`. There are libraries which will help you with this, like [Lodash](https://lodash.com/), for instance.
-
-`imports/ui/TaskForm.jsx`
+`imports/ui/App.js`
 ```js
-import React, { useState } from 'react';
-import { TasksCollection } from '/imports/api/TasksCollection';
- 
-export const TaskForm = () => {
-  const [text, setText] = useState("");
-  
-  const handleSubmit = e => {
-    e.preventDefault();
+...
+  tasks() {
+    return TasksCollection.find({}, { sort: { createdAt: -1 } });
+  },
+});
 
-    if (!text) return;
+Template.form.events({
+  "submit .task-form"(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
 
+    // Get value from form element
+    const target = event.target;
+    const text = target.text.value;
+
+    // Insert a task into the collection
     TasksCollection.insert({
-      text: text.trim(),
-      createdAt: new Date()
+      text,
+      createdAt: new Date(), // current time
     });
 
-    setText("");
-  };
- 
-  return (
-    <form className="task-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Type to add new tasks"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
- 
-      <button type="submit">Add Task</button>
-    </form>
-  );
-};
+    // Clear form
+    target.text.value = '';
+  }
+})
 ```
 
-Also insert a date `createdAt` in your `task` document so you know when each task was created.
+Also, insert a date `createdAt` in your `task` document, so you know when each task was created.
+
+
+### Attaching events to templates
+
+Event listeners are added to templates in much the same way as helpers are: by calling `Template.templateName.events(...)` with a dictionary. The keys describe the event to listen for, and the values are event handlers that are called when the event happens.
+
+In our case above, we are listening to the `submit` event on any element that matches the CSS selector `.task-form`. When this event is triggered by the user pressing either enter inside the input field, or the submit button, our event handler function is called.
+
+The event handler gets an argument called `event` that has some information about the event that was triggered. In this case `event.target` is our form element, and we can get the value of our input with `event.target.text.value`. You can see all the other properties of the event object by adding a `console.log(event)` and inspecting the object in your browser console.
+
+Finally, in the last line of the event handler, we clear the input to prepare for another new task.
 
 ## 3.5: Show Newest Tasks First
 
 Now you just need to make a change which will make users happy: we need to show the newest tasks first. We can accomplish quite quickly by sorting our [Mongo](https://guide.meteor.com/collections.html#mongo-collections) query.
 
-`imports/ui/App.jsx`
+`imports/ui/App.js`
 ```js
-..
- 
-export const App = () => {
-  const tasks = useTracker(() => TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch());
- ..
+...
+
+Template.body.helpers({
+  tasks() {
+    return TasksCollection.find({}, { sort: { createdAt: -1 } });
+  },
+});
+
+Template.form.events({
+
+...
+
 ```
 
 Your app should look like this:
@@ -139,6 +137,6 @@ Your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step03-new-task-on-list.png"/>
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step03) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step03) 
 
 In the next step we are going to update your tasks state and provide a way for users to remove tasks.
