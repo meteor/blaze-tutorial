@@ -6,7 +6,7 @@ Meteor already sets up MongoDB for you. In order to use our database we need to 
 
 > You can read more about collections [here](http://guide.meteor.com/collections.html).
 
-In this step we will implement all the necessary code to have a basic collection for our tasks up and running using React hooks.
+In this step we will implement all the necessary code to have a basic collection for our tasks up and running.
 
 ## 2.1: Create Tasks Collection
 
@@ -61,42 +61,21 @@ So you are importing the `TasksCollection` and adding a few tasks on it iteratin
 
 ## 2.3: Render Tasks Collection
 
-Now comes the fun part, you will render the tasks using a React Function Component and a Hook called `useTracker` from a package called [react-meteor-data](https://atmospherejs.com/meteor/react-meteor-data). 
+Now comes the fun part, you will render the tasks saved in our database. With Blaze that will be pretty simple to do.  
 
-> Meteor works with Meteor packages and NPM packages, usually Meteor packages are using Meteor internals or other Meteor packages.
+On your file `body.js`, import the `TasksCollection` file and, instead of return a static array, return the tasks saved in the database:
 
-This package is already included in the React skeleton (`meteor create yourproject`) so you don't need to add it but you can always add Meteor packages running `meteor add package-name`:
-
-```shell
-meteor add react-meteor-data
-```
-
-Now you are ready to import code from this package, when importing code from a Meteor package the only difference from NPM modules is that you need to prepend `meteor/` in the from part of your import.
-
-The `useTracker` function exported by `react-meteor-data` is a React Hook that allows you to have reactivity in your React components. Every time the data changes through reactivity your component will re-render. Cool, right? 
-
-> For more information about React Hooks read [here](https://reactjs.org/docs/hooks-faq.html).
-
-`imports/ui/App.jsx`
+`imports/ui/body.js`
 ```javascript
-import React from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '/imports/api/TasksCollection';
-import { Task } from './Task';
- 
-export const App = () => {
-  const tasks = useTracker(() => TasksCollection.find({}).fetch());
- 
-  return (
-    <div>
-      <h1>Welcome to Meteor!</h1>
- 
-      <ul>
-        { tasks.map(task => <Task key={ task._id } task={ task }/>) }
-      </ul>
-    </div>
-  );
-};
+import { Template } from 'meteor/templating';
+import { TasksCollection } from "../api/TasksCollection";
+import './body.html';
+
+Template.body.helpers({
+  tasks() {
+    return TasksCollection.find({});
+  },
+});
 ```
 
 See how your app should look like now:
@@ -122,7 +101,7 @@ You can double-click your collection to see the documents stored on it:
 
 But wait, how my tasks are coming from the server to the client? We are going to explain this later, in the step about Publications and Subscriptions. What you need to know now is that you are publishing all the data from the database to the client. This will be removed later as we don't want to publish all the data all the time.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step02) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step02) 
 
 In the next step we are going to create tasks using a form.
 
