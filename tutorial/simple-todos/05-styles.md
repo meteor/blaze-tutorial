@@ -150,58 +150,40 @@ header {
 
 ## 5.2: Applying styles
 
-Now you need to add some elements around your components. You are going to add a `className` to your main div in the `App`, also a `header` element with a few `divs` around your `h1`, and a main `div` around your form and list. Check below how it should be, pay attention to the name of the classes, they need to be the same as in the CSS file:
+Now you need to add some elements around your components. Also, we need to apply our new style to the app using the `class` attribute. All this work will be done inside the file `App.html`:
 
-`imports/ui/App.jsx`
+`imports/ui/App.html`
 
-```js
-  ..
-  return (
-    <div className="app">
-      <header>
-        <div className="app-bar">
-          <div className="app-header">
-            <h1>Welcome to Meteor!</h1>
+```html
+  <body>
+      <div class="app">
+          <header>
+              <div class="app-bar">
+                  <div class="app-header">
+                      <h1>📝️ To Do List</h1>
+                  </div>
+              </div>
+          </header>
+  
+          <div class="main">
+              {{> form }}
+  
+              <ul class="tasks">
+                  {{#each tasks}}
+                      {{> task}}
+                  {{/each}}
+              </ul>
           </div>
-        </div>
-      </header>
-
-      <div className="main">
-        <TaskForm />
-
-        <ul className="tasks">
-          {tasks.map(task => (
-            <Task
-              key={task._id}
-              task={task}
-              onCheckboxClick={toggleChecked}
-              onDeleteClick={deleteTask}
-            />
-          ))}
-        </ul>
       </div>
-    </div>
-  );
-```
+  </body>
 
-> In React we use `className` instead of `class` as React uses Javascript to define the UI and `class` is a reserved word in Javascript.
-
-Also choose a better title for your app, Meteor is amazing but you don't want to see `Welcome to Meteor!` in your app top bar all the time.
-
-You could choose something like:
-
-`imports/ui/App.jsx`
-
-```js
-  ..
-  <h1>📝️ To Do List</h1>
-  ..
+...
 ```
 
 Your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step05-styles.png"/>
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step05) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step05) 
 
 In the next step we are going to make this task list more interactive, for example, providing a way to filter tasks.
