@@ -4,37 +4,84 @@ title: "6: Filter tasks"
 
 In this step you will filter your tasks by status and show the quantity of pending tasks.
 
-## 6.1: useState
+## 6.1: ReactiveDict
 
 First you are going to add a button to show or hide the completed tasks from the list.
 
-The `useState` function from React is the best way to keep the state of this button. It returns an array with two items, where the first element is the value of the state, and the second is a setter function that is how you are going to update your state. You can use _array destructuring_ to get these two back and already declare a variable for them.
+To keep state we're going to use the `ReactiveDict`. A ReactiveDict stores an arbitrary set of key-value pairs. Use it to manage internal state in your components, ie. like the currently selected item in a list. To know more about how `ReactiveDict` works you can click on this [link](https://docs.meteor.com/api/reactive-dict.html), and there you will find everything you need to know and everything you can do with it.
 
-Bear in mind that the names used for the constants do not belong to the React API, you can name them whatever you like.
+For now, we just need to install the `reactive-dict` package to our app. Simply run the command below on your app root directory:
 
-Also add a `button` below the task form that will display a different text based on the current state.
-
-`imports/ui/App.jsx`
-```js
-import React, { useState } from 'react';
-..
-export const App = () => {
-  const [hideCompleted, setHideCompleted] = useState(false);
- 
-  ..
-    <div className="main">
-      <TaskForm />
-       <div className="filter">
-         <button onClick={() => setHideCompleted(!hideCompleted)}>
-           {hideCompleted ? 'Show All' : 'Hide Completed'}
-         </button>
-       </div>
-  ..
+```shell script
+meteor add reactive-dict
 ```
 
-You can read more about the `useState` hook [here](https://reactjs.org/docs/hooks-state.html).
+Then we need to set up a new `ReactiveDict` and attach it to the body template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as its template renders in the screen:
 
-We recommend that you add your hooks always in the top of your components, so it will be easier to avoid some problems, like always running them in the same order.
+`imports/ui/App.js`
+
+```js
+import { Template } from 'meteor/templating';
+import { TasksCollection } from "../api/TasksCollection";
+import { ReactiveDict } from 'meteor/reactive-dict';
+
+import './App.html';
+import './Task.js';
+
+
+Template.body.onCreated(function bodyOnCreated() {
+  this.state = new ReactiveDict();
+});
+
+...
+```
+
+Then, we need an event handler to update the `ReactiveDict` variable when the button is clicked. An event handler takes two arguments, the second of which is the same template instance which was this in the onCreated callback. Also create a new constant called `HIDE_COMPLETED_STRING`, below the imports, that will be used throughout the code as the name of the variable we are persisting:
+
+`imports/ui/App.js`
+
+```js
+...
+
+const HIDE_COMPLETED_STRING = "hideCompleted";
+
+...
+
+Template.body.events({
+  "click #hide-completed-button"(event, instance) {
+    const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
+    instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
+  }
+});
+
+...
+```
+
+The button in the UI to toggle our state will look something like this:
+
+```html
+...
+
+</header>
+
+<div class="main">
+    {{> form }}
+
+    <div class="filter">
+        <button id="hide-completed-button">
+            {{#if hideCompleted}}
+                    Show All
+            {{else}}
+                    Hide Completed
+            {{/if}}
+        </button>
+    </div>
+</div>
+
+...
+```
+
+You may notice we're using for the first time a conditional test, and it's pretty straightforward. You can learn more about the conditional test _if_ [here](https://guide.meteor.com/v1.3/blaze.html#builtin-block-helpers). We're also using a helper called `hideCompleted` that we didn't create yet, but we'll shortly.
 
 ## 6.2: Button style
 
@@ -55,19 +102,30 @@ You should add some style to your button so it does not look gray and without a 
 
 ## 6.3: Filter Tasks
 
-Now, if the user wants to see only pending tasks you can add a filter to your selector in the Mini Mongo query, you want to get all the tasks that are not `isChecked` true.
+Now, we need to update `Template.body.helpers`. The code below verifies if the variable `hideCompleted` is set to `true` and if yes, we filter our query just to get task non completed. We also have a new helper called `hideCompleted` that will help us in the UI well we want to know if we're filtering or not:
 
-`imports/ui/App.jsx`
+`imports/ui/App.js`
+
 ```js
-..
-  const hideCompletedFilter = { isChecked: { $ne: true } };
+...
 
-  const tasks = useTracker(() =>
-    TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
+Template.body.helpers({
+  tasks() {
+    const instance = Template.instance();
+    const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
+
+    const hideCompletedFilter = { isChecked: { $ne: true } };
+
+    return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
       sort: { createdAt: -1 },
-    }).fetch()
-  );
-..
+    }).fetch();
+  },
+  hideCompleted() {
+    return Template.instance().state.get(HIDE_COMPLETED_STRING);
+  },
+});
+
+...
 ```
 
 ## 6.4: Meteor Dev Tools Extension
@@ -86,30 +144,40 @@ Install it in your Google Chrome browser using this [link](https://chrome.google
 
 ## 6.5: Pending tasks
 
-Update the App component in order to show the number of pending tasks in the app bar.
+Update the `header` in order to show the number of pending tasks in the app bar.
 
 You should avoid adding zero to your app bar when there are no pending tasks.
 
-`imports/ui/App.jsx`
+`imports/ui/App.js`
 ```js
-..
-  const pendingTasksCount = useTracker(() =>
-    TasksCollection.find(hideCompletedFilter).count()
-  );
+...
 
-  const pendingTasksTitle = `${
-    pendingTasksCount ? ` (${pendingTasksCount})` : ''
-  }`;
-..
+Template.body.helpers({
+  ...,
+  incompleteCount() {
+    const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
+    return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
+  },
+});
 
-    <h1>
-      📝️ To Do List
-      {pendingTasksTitle}
-    </h1>
-..
+...
 ```
 
-You could do both finds in the same `useTracker` and then return an object with both properties but to have a code that is easier to understand code we created two different trackers here.
+`imports/ui/App.html`
+
+```html
+<body>
+    <div class="app">
+        <header>
+            <div class="app-bar">
+                <div class="app-header">
+                    <h1>📝️ To Do List {{incompleteCount}}</h1>
+                </div>
+            </div>
+        </header>
+
+...
+```
 
 Your app should look like this:
 
