@@ -53,50 +53,61 @@ You should not see anything different in your app UI yet.
 
 You need to provide a way for the users to input the credentials and authenticate, for that we need a form.
 
-We can implement it using `useState` hook. Create a new file called `LoginForm.jsx` and add a form to it. You should use `Meteor.loginWithPassword(username, password);` to authenticate your user with the provided inputs.
+Our login form will be pretty simple, just two fields (username and password) and a button. You should use `Meteor.loginWithPassword(username, password);` to authenticate your user with the provided inputs.
 
-`imports/ui/LoginForm.jsx`
+`imports/ui/Login.html`
+
+```html
+<template name="login">
+    <form class="login-form">
+        <div>
+            <label htmlFor="username">Username</label>
+
+            <input
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    required
+            />
+        </div>
+
+        <div>
+            <label htmlFor="password">Password</label>
+
+            <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    required
+            />
+        </div>
+        <div>
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+</template>
+```
+
+`imports/ui/Login.js`
 
 ```js
 import { Meteor } from 'meteor/meteor';
-import React, { useState } from 'react';
+import { Template } from 'meteor/templating';
+import './Login.html';
 
-export const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const submit = e => {
+Template.login.events({
+  'submit .login-form'(e) {
     e.preventDefault();
 
+    const target = e.target;
+
+    const username = target.username.value;
+    const password = target.password.value;
+
     Meteor.loginWithPassword(username, password);
-  };
+  }
+});
 
-  return (
-    <form onSubmit={submit} className="login-form">
-      <label htmlFor="username">Username</label>
-
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        required
-        onChange={e => setUsername(e.target.value)}
-      />
-
-      <label htmlFor="password">Password</label>
-
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        required
-        onChange={e => setPassword(e.target.value)}
-      />
-
-      <button type="submit">Log In</button>
-    </form>
-  );
-};
 ```
 
 Ok, now you have a form, let's use it.
@@ -105,65 +116,67 @@ Ok, now you have a form, let's use it.
 
 Our app should only allow an authenticated user to access its task management features.
 
-We can accomplish that returning the `LoginForm` component when we don't have an authenticated user, otherwise we return the form, filter, and list component.
+We can accomplish that rendering the `Login` from template when we don't have an authenticated user, otherwise we return the form, filter, and list component.
 
-You should first wrap the 3 components (form, filter and list) in a `<Fragment>`, Fragment is a special component in React that you can use to group components together without affecting your final DOM, it means without affecting your UI as it is not going to introduce other elements in the HTML.
+To achieve this we will use a conditional test inside our main div on `App.html`: 
 
-> Read more about Fragments [here](https://reactjs.org/docs/fragments.html)
+`imports/ui/App.html`
 
-So you can get your authenticated user or null from `Meteor.user()`, you should wrap it in a `useTracker` hook for it to be reactive. Then you can return the `Fragment` with Tasks and everything else or `LoginForm` based on the user being present or not in the session.
+```html
+...
+                </div>
+            </div>
+        </header>
 
-`imports/ui/App.jsx`
+        <div class="main">
+            {{#if isUserLogged}}
+
+                {{> form }}
+
+                <div class="filter">
+                    <button id="hide-completed-button">
+                        {{#if hideCompleted}}
+                                Show All
+                        {{else}}
+                                Hide Completed
+                        {{/if}}
+                    </button>
+                </div>
+
+                <ul class="tasks">
+                    {{#each tasks}}
+                        {{> task}}
+                    {{/each}}
+                </ul>
+            {{else}}
+                {{> login }}
+            {{/if}}
+        </div>
+...
+```
+
+So, as you can see, if the use is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
+
+`imports/ui/App.js`
 
 ```js
-import React, { useState, Fragment } from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '/imports/api/TasksCollection';
-import { Task } from './Task';
-import { TaskForm } from './TaskForm';
-import { LoginForm } from './LoginForm';
+...
 
-..
-export const App = () => {
-  const user = useTracker(() => Meteor.user());
-  
-  ..
-  return (
-      ..
-      <div className="main">
-        {user ? (
-          <Fragment>
-            <TaskForm />
+const getUser = () => Meteor.user();
+const isUserLogged = () => !!getUser();
+...
 
-            <div className="filter">
-              <button onClick={() => setHideCompleted(!hideCompleted)}>
-                {hideCompleted ? 'Show All' : 'Hide Completed'}
-              </button>
-            </div>
-
-            <ul className="tasks">
-              {tasks.map(task => (
-                <Task
-                  key={task._id}
-                  task={task}
-                  onCheckboxClick={toggleChecked}
-                  onDeleteClick={deleteTask}
-                />
-              ))}
-            </ul>
-          </Fragment>
-        ) : (
-          <LoginForm />
-        )}
-      </div>
-..
+Template.body.helpers({
+  ...,
+  isUserLogged() {
+    return isUserLogged();
+  }
+});
 ```
 
 ## 7.5: Login Form style
 
 Ok, let's style the login form now:
-
-Wrap your pairs of label and input in `div`s so it will easier to control it on CSS.
 
 `client/main.css`
 
@@ -265,85 +278,116 @@ See that we are using a new field called `userId` with our user `_id` field, we 
 
 Now you can filter the tasks in the UI by the authenticated user. Use the user `_id` to add the field `userId` to your Mongo selector when getting the tasks from Mini Mongo.
 
-`imports/ui/App.jsx`
+`imports/ui/App.js`
 
 ```js
-..
-    const hideCompletedFilter = { isChecked: { $ne: true } };
-  
-    const userFilter = user ? { userId: user._id } : {};
-  
-    const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
-  
-    const tasks = useTracker(() => {
-      if (!user) {
-        return [];
-      }
-  
-      return TasksCollection.find(
-        hideCompleted ? pendingOnlyFilter : userFilter,
-        {
-          sort: { createdAt: -1 },
-        }
-      ).fetch();
-    });
-  
-    const pendingTasksCount = useTracker(() => {
-      if (!user) {
-        return 0;
-      }
-  
-      return TasksCollection.find(pendingOnlyFilter).count();
-    });
-..
+...
+const getTasksFilter = () => {
+  const user = getUser();
 
-    <TaskForm user={user} />
-..
+  const hideCompletedFilter = { isChecked: { $ne: true } };
+
+  const userFilter = user ? { userId: user._id } : {};
+
+  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
+
+  return { userFilter, pendingOnlyFilter };
+}
+
+...
+
+Template.body.helpers({
+  tasks() {
+    const instance = Template.instance();
+    const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
+
+    const { pendingOnlyFilter, userFilter } = getTasksFilter();
+
+    if (!isUserLogged()) {
+      return [];
+    }
+
+    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
+      sort: { createdAt: -1 },
+    }).fetch();
+  },
+  ...,
+  incompleteCount() {
+    if (!isUserLogged()) {
+      return '';
+    }
+
+    const { pendingOnlyFilter } = getTasksFilter();
+
+    const incompleteTasksCount = TasksCollection.find(pendingOnlyFilter).count();
+    return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
+  },
+  ...
+});
 ```
 
-Also update the `insert` call to include the field `userId` in the `TaskForm`. You should pass the user from the `App` component to the `TaskForm`.
+Also, update the `insert` call to include the field `userId` when creating a new task: 
 
-`imports/ui/TaskForm.jsx`
+`imports/ui/Task.js`
 ```js
-..
-export const TaskForm = ({ user }) => {
-  const [text, setText] = useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    if (!text) return;
-
+...
+Template.form.events({
+  "submit .task-form"(event) {
+   ...
     TasksCollection.insert({
-      text: text.trim(),
-      createdAt: new Date(),
-      userId: user._id
+      text,
+      userId: getUser()._id,
+      createdAt: new Date(), // current time
     });
-
-    setText('');
-  };
-..
+   ...
+  }
+});
+...
 ```
 
 ## 7.8: Log out
 
-We also can better organize our tasks by showing the username of the owner below our app bar. You can include a new `div` right after our `Fragment` start tag.
+We also can better organize our tasks by showing the username of the owner below our app bar. Let's add a new `div` where the user can click and log out from the app:
 
-On this you can add an `onClick` handler to logout the user as well. It is very straightforward, just call `Meteor.logout()` on it.
 
-`imports/ui/App.jsx`
+`imports/ui/App.html`
+
+```html
+...
+        <div class="main">
+            {{#if isUserLogged}}
+                <div class="user">
+                    {{getUser.username}} 🚪
+                </div>
+                {{> form }}
+
+...
+```
+
+Now, let's create the `getUser` helper and implement the event that will log out the user when they click on this `div`. The log out with Meteor is simply done by calling the function `Meteor.logout()`:
+
+`imports/ui/App.js`
 
 ```js
-..
-  const logout = () => Meteor.logout();
+...
 
-  return (
-..
-    <Fragment>
-      <div className="user" onClick={logout}>
-        {user.username} 🚪
-      </div>
-..
+Template.body.events({
+  ...,
+  'click .user'() {
+    Meteor.logout();
+  }
+});
+
+...
+
+Template.body.helpers({
+  ...,
+  getUser() {
+    return getUser();
+  }
+});
+
+...
 ```
 
 Remember to style your user name as well.

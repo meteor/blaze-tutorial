@@ -3,8 +3,24 @@ import { TasksCollection } from "../api/TasksCollection";
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './App.html';
 import './Task.js';
+import './Login.js';
 
 const HIDE_COMPLETED_STRING = "hideCompleted";
+
+const getUser = () => Meteor.user();
+const isUserLogged = () => !!getUser();
+
+const getTasksFilter = () => {
+  const user = getUser();
+
+  const hideCompletedFilter = { isChecked: { $ne: true } };
+
+  const userFilter = user ? { userId: user._id } : {};
+
+  const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
+
+  return { userFilter, pendingOnlyFilter };
+}
 
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
@@ -14,6 +30,9 @@ Template.body.events({
   "click #hide-completed-button"(event, instance) {
     const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
+  },
+  'click .user'() {
+    Meteor.logout();
   }
 });
 
@@ -22,9 +41,13 @@ Template.body.helpers({
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
 
-    const hideCompletedFilter = { isChecked: { $ne: true } };
+    const { pendingOnlyFilter, userFilter } = getTasksFilter();
 
-    return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
+    if (!isUserLogged()) {
+      return [];
+    }
+
+    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
       sort: { createdAt: -1 },
     }).fetch();
   },
@@ -32,9 +55,21 @@ Template.body.helpers({
     return Template.instance().state.get(HIDE_COMPLETED_STRING);
   },
   incompleteCount() {
-    const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
+    if (!isUserLogged()) {
+      return '';
+    }
+
+    const { pendingOnlyFilter } = getTasksFilter();
+
+    const incompleteTasksCount = TasksCollection.find(pendingOnlyFilter).count();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
+  isUserLogged() {
+    return isUserLogged();
+  },
+  getUser() {
+    return getUser();
+  }
 });
 
 Template.form.events({
@@ -49,6 +84,7 @@ Template.form.events({
     // Insert a task into the collection
     TasksCollection.insert({
       text,
+      userId: getUser()._id,
       createdAt: new Date(), // current time
     });
 
