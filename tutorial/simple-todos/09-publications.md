@@ -52,7 +52,7 @@ import '/imports/api/tasksPublications';
 
 Then we can subscribe to that publication in the client.
 
-As we want to receive changes from this publication we are going to `subscribe` to it inside a `useTracker` hook.
+As we want to receive changes from this publication we are going to `subscribe` to it inside a `Tracker.autorun`.
 
 It's also a good moment for us to refactor our code to use a single `useTracker` to get data from `TasksCollection`.
 
