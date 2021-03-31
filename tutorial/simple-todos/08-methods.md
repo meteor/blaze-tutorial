@@ -117,53 +117,48 @@ See that you don't need to get any symbol back from the import, you only need to
 
 As you have defined your methods, you need to update the places we were operating the collection to use them instead.
 
-In the `TaskForm` file you should call `Meteor.call('tasks.insert', text);` instead of `TasksCollection.insert`. Remember to fix your imports as well.
+In the `App.js` file you should call `Meteor.call('tasks.insert', text);` instead of `TasksCollection.insert`.
 
-`imports/ui/TaskForm.jsx`
+`imports/ui/App.js`
+
 ```js
-import { Meteor } from 'meteor/meteor';
-import React, { useState } from 'react';
+...
 
-export const TaskForm = () => {
-  const [text, setText] = useState('');
+Template.form.events({
+  "submit .task-form"(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
 
-  const handleSubmit = e => {
-    e.preventDefault();
+    // Get value from form element
+    const target = event.target;
+    const text = target.text.value;
 
-    if (!text) return;
-
+    // Insert a task into the collection
     Meteor.call('tasks.insert', text);
 
-    setText('');
-  };
-  ..
-};
+    // Clear form
+    target.text.value = '';
+  }
+})
 ```
 
-See that your `TaskForm` component does not need to receive the user anymore as we get the `userId` in the server.
+In the `Task.js` file you should call `Meteor.call('tasks.setIsChecked', _id, !isChecked);` instead of `TasksCollection.update` and `Meteor.call('tasks.remove', _id)` instead of `TasksCollection.remove`. Remember to remove the `TasksCollection` import as well.
 
-In the `App` file you should call `Meteor.call('tasks.setIsChecked', _id, !isChecked);` instead of `TasksCollection.update` and `Meteor.call('tasks.remove', _id)` instead of `TasksCollection.remove`.
+`imports/ui/Task.js`
 
-Remember to also remove the user property from your `<TaskForm />`
-
-`imports/ui/App.jsx`
 ```js
-import { Meteor } from 'meteor/meteor';
-import React, { useState, Fragment } from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { TasksCollection } from '/imports/db/TasksCollection';
-import { Task } from './Task';
-import { TaskForm } from './TaskForm';
-import { LoginForm } from './LoginForm';
+import { Template } from 'meteor/templating';
 
-const toggleChecked = ({ _id, isChecked }) =>
-  Meteor.call('tasks.setIsChecked', _id, !isChecked);
+import './Task.html';
 
-const deleteTask = ({ _id }) => Meteor.call('tasks.remove', _id);
-..
-
-            <TaskForm />
-..
+Template.task.events({
+  'click .toggle-checked'() {
+    Meteor.call('tasks.setIsChecked', this._id, !this.isChecked);
+  },
+  'click .delete'() {
+    Meteor.call('tasks.remove', this._id);
+  },
+});
 ```
 
 Now your inputs and buttons will start working again. What you gained?
@@ -180,7 +175,7 @@ This change is not required but it's recommended to keep our names consistent wi
 
 Remember to fix your imports, you have 3 imports to `TasksCollection` in the following files:
 - `imports/api/tasksMethods.js`
-- `imports/ui/TaskForm.jsx`
+- `imports/ui/App.jsx`
 - `server/main.js`
 
 they should be changed from `import { TasksCollection } from '/imports/api/TasksCollection';` to `import { TasksCollection } from '/imports/db/TasksCollection';`.
@@ -191,6 +186,6 @@ Your app should look exactly as before as we didn't change anything that is visi
 
 We recommend that you change your `check` calls for wrong types to produce some errors, then you could understand what will happen in these cases as well.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step08) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step08) 
 
 In the next step we are going to start using Publications to just publish the data that is necessary on each case.
