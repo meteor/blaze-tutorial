@@ -54,54 +54,59 @@ Then we can subscribe to that publication in the client.
 
 As we want to receive changes from this publication we are going to `subscribe` to it inside a `Tracker.autorun`.
 
-It's also a good moment for us to refactor our code to use a single `useTracker` to get data from `TasksCollection`.
+`Tracker.autorun` run a function now and rerun it later whenever its dependencies change, which is perfect for us to know when our data is ready to be displayed to the user. You can learn more about the package `tracker` [here](https://docs.meteor.com/api/tracker.html).
 
-`imports/ui/App.jsx`
+`imports/ui/App.js`
 
 ```js
-..
-  const { tasks, pendingTasksCount, isLoading } = useTracker(() => {
-    const noDataAvailable = { tasks: [], pendingTasksCount: 0 };
-    if (!Meteor.user()) {
-      return noDataAvailable;
-    }
-    const handler = Meteor.subscribe('tasks');
+...
+const IS_LOADING_STRING = "isLoading";
+...
 
-    if (!handler.ready()) {
-      return { ...noDataAvailable, isLoading: true };
-    }
+Template.body.onCreated(function bodyOnCreated() {
+  this.state = new ReactiveDict();
 
-    const tasks = TasksCollection.find(
-      hideCompleted ? pendingOnlyFilter : userFilter,
-      {
-        sort: { createdAt: -1 },
-      }
-    ).fetch();
-    const pendingTasksCount = TasksCollection.find(pendingOnlyFilter).count();
-
-    return { tasks, pendingTasksCount };
+  const handler = Meteor.subscribe('tasks');
+  Tracker.autorun(() => {
+    this.state.set(IS_LOADING_STRING, !handler.ready());
   });
-..
+});
+
+...
+
+Template.body.helpers({
+  ...,
+  isLoading() {
+    const instance = Template.instance();
+    return instance.state.get(IS_LOADING_STRING);
+  }
+});
+
+...
 ```
 
 ## 9.4: Loading state
 
-You should also add a loading state for your app, that means, while the subscription data is not ready you should inform this to your user. To discover if the subscription is ready or not you should get the return of the `subscribe` call, it is an object with the subscription state including the `ready` function that will return a `boolean`. 
+Now we can show to the user when the data is loading. Let's use our new helper to show this:
 
-`imports/ui/App.jsx`
+`imports/ui/App.html`
 
-```js
-..
-            <div className="filter">
-              <button onClick={() => setHideCompleted(!hideCompleted)}>
-                {hideCompleted ? 'Show All' : 'Hide Completed'}
-              </button>
-            </div>
+```html
+...
+                <div class="filter">
+                    <button id="hide-completed-button">
+                        {{#if hideCompleted}}
+                                Show All
+                        {{else}}
+                                Hide Completed
+                        {{/if}}
+                    </button>
+                </div>
 
-            {isLoading && <div className="loading">loading...</div>}
-
-            <ul className="tasks">
-..
+                {{#if isLoading}}
+                    <div class="loading">loading...</div>
+                {{/if}}
+...
 ```
 
 Let's style this loading a little as well:
@@ -176,6 +181,6 @@ Why this is important if we are not returning tasks from other users in the clie
 
 This is important because anyone can call Meteor `Methods` using the browser `console`. You can test this using your DevTools console tab and then type and hit enter: `Meteor.call('tasks.remove', 'xtPTsNECC3KPuMnDu');`. If you remove the validation from your remove Method and you pass one valid task `_id` from your database you will be able to remove it.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/react-tutorial/tree/master/src/simple-todos/step09) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step09) 
 
 In the next step we are going to run the app on mobile environment as a Native app.
