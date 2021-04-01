@@ -1,0 +1,49 @@
+<body>
+    <div class="app">
+        <header>
+            <div class="app-bar">
+                <div class="app-header">
+                    <h1>📝️ To Do List {{incompleteCount}}</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="main">
+            {{#if isUserLogged}}
+                <div class="user">
+                    {{getUser.username}} 🚪
+                </div>
+                {{> form }}
+
+                <div class="filter">
+                    <button id="hide-completed-button">
+                        {{#if hideCompleted}}
+                                Show All
+                        {{else}}
+                                Hide Completed
+                        {{/if}}
+                    </button>
+                </div>
+
+                {{#if isLoading}}
+                    <div class="loading">loading...</div>
+                {{/if}}
+
+                <ul class="tasks">
+                    {{#each tasks}}
+                        {{> task}}
+                    {{/each}}
+                </ul>
+            {{else}}
+                {{> login }}
+            {{/if}}
+        </div>
+    </div>
+</body>
+
+<template name="form">
+    <form class="task-form">
+        <input type="text" name="text" placeholder="Type to add new tasks" />
+        <button type="submit">Add Task</button>
+    </form>
+</template>
