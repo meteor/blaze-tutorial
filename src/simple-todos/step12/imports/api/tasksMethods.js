@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { TasksCollection } from '../db/TasksCollection';
 
@@ -11,9 +12,9 @@ Meteor.methods({
 
     TasksCollection.insert({
       text,
-      createdAt: new Date,
+      createdAt: new Date(),
       userId: this.userId,
-    })
+    });
   },
 
   'tasks.remove'(taskId) {
@@ -48,8 +49,8 @@ Meteor.methods({
 
     TasksCollection.update(taskId, {
       $set: {
-        isChecked
-      }
+        isChecked,
+      },
     });
-  }
+  },
 });

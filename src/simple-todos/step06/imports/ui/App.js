@@ -1,20 +1,20 @@
 import { Template } from 'meteor/templating';
-import { TasksCollection } from "../api/TasksCollection";
+import { TasksCollection } from '../api/TasksCollection';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './App.html';
 import './Task.js';
 
-const HIDE_COMPLETED_STRING = "hideCompleted";
+const HIDE_COMPLETED_STRING = 'hideCompleted';
 
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
-})
+});
 
 Template.body.events({
-  "click #hide-completed-button"(event, instance) {
+  'click #hide-completed-button'(event, instance) {
     const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
-  }
+  },
 });
 
 Template.body.helpers({
@@ -32,18 +32,20 @@ Template.body.helpers({
     return Template.instance().state.get(HIDE_COMPLETED_STRING);
   },
   incompleteCount() {
-    const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
+    const incompleteTasksCount = TasksCollection.find({
+      isChecked: { $ne: true },
+    }).count();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
 });
 
 Template.form.events({
-  "submit .task-form"(event) {
+  'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
     // Get value from form element
-    const target = event.target;
+    const { target } = event;
     const text = target.text.value;
 
     // Insert a task into the collection
@@ -54,5 +56,5 @@ Template.form.events({
 
     // Clear form
     target.text.value = '';
-  }
-})
+  },
+});

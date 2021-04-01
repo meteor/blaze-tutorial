@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { TasksCollection } from "../api/TasksCollection";
+import { TasksCollection } from '../api/TasksCollection';
 import './App.html';
 
 Template.body.helpers({
@@ -9,12 +9,12 @@ Template.body.helpers({
 });
 
 Template.form.events({
-  "submit .task-form"(event) {
+  'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
     // Get value from form element
-    const target = event.target;
+    const { target } = event;
     const text = target.text.value;
 
     // Insert a task into the collection
@@ -25,5 +25,5 @@ Template.form.events({
 
     // Clear form
     target.text.value = '';
-  }
-})
+  },
+});

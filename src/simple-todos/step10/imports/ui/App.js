@@ -1,13 +1,14 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { TasksCollection } from "../db/TasksCollection";
-import { Tracker } from "meteor/tracker";
+import { TasksCollection } from '../db/TasksCollection';
+import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './App.html';
 import './Task.js';
 import './Login.js';
 
-const HIDE_COMPLETED_STRING = "hideCompleted";
-const IS_LOADING_STRING = "isLoading";
+const HIDE_COMPLETED_STRING = 'hideCompleted';
+const IS_LOADING_STRING = 'isLoading';
 
 const getUser = () => Meteor.user();
 const isUserLogged = () => !!getUser();
@@ -22,7 +23,7 @@ const getTasksFilter = () => {
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
 
   return { userFilter, pendingOnlyFilter };
-}
+};
 
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
@@ -31,16 +32,16 @@ Template.body.onCreated(function bodyOnCreated() {
   Tracker.autorun(() => {
     this.state.set(IS_LOADING_STRING, !handler.ready());
   });
-})
+});
 
 Template.body.events({
-  "click #hide-completed-button"(event, instance) {
+  'click #hide-completed-button'(event, instance) {
     const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
   },
   'click .user'() {
     Meteor.logout();
-  }
+  },
 });
 
 Template.body.helpers({
@@ -54,9 +55,12 @@ Template.body.helpers({
       return [];
     }
 
-    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-      sort: { createdAt: -1 },
-    }).fetch();
+    return TasksCollection.find(
+      hideCompleted ? pendingOnlyFilter : userFilter,
+      {
+        sort: { createdAt: -1 },
+      }
+    ).fetch();
   },
   hideCompleted() {
     return Template.instance().state.get(HIDE_COMPLETED_STRING);
@@ -68,7 +72,9 @@ Template.body.helpers({
 
     const { pendingOnlyFilter } = getTasksFilter();
 
-    const incompleteTasksCount = TasksCollection.find(pendingOnlyFilter).count();
+    const incompleteTasksCount = TasksCollection.find(
+      pendingOnlyFilter
+    ).count();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
   isUserLogged() {
@@ -80,16 +86,16 @@ Template.body.helpers({
   isLoading() {
     const instance = Template.instance();
     return instance.state.get(IS_LOADING_STRING);
-  }
+  },
 });
 
 Template.form.events({
-  "submit .task-form"(event) {
+  'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
     // Get value from form element
-    const target = event.target;
+    const { target } = event;
     const text = target.text.value;
 
     // Insert a task into the collection
@@ -97,5 +103,5 @@ Template.form.events({
 
     // Clear form
     target.text.value = '';
-  }
-})
+  },
+});
