@@ -105,7 +105,7 @@ Now you can write the test to call the `tasks.remove` method as that user and ve
 meteor add quave:testing
 ```
 
-`imports/api/tasks.tests.js`
+`imports/api/tasksMethods.tests.js`
 
 ```js
 import { Meteor } from 'meteor/meteor';
@@ -146,7 +146,7 @@ Remember to import `assert` from `chai` (`import { assert } from 'chai';`)
 
 You can add as many tests you want, below you can find a few other tests that can be helpful for you to have more ideas of what to test and how.:
 
-`imports/api/tasks.tests.js`
+`imports/api/tasksMethods.tests.js`
 
 ```js
 import { Meteor } from 'meteor/meteor';

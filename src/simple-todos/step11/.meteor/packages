@@ -21,3 +21,5 @@ shell-server@0.5.0            # Server-side component of the `meteor shell` comm
 
 reactive-dict
 accounts-password
+meteortesting:mocha
+quave:testing
