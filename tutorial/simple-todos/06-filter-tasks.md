@@ -2,13 +2,13 @@
 title: "6: Filter tasks"
 ---
 
-In this step you will filter your tasks by status and show the quantity of pending tasks.
+In this step, you will filter your tasks by status and show the quantity of pending tasks.
 
 ## 6.1: ReactiveDict
 
 First you are going to add a button to show or hide the completed tasks from the list.
 
-To keep state we're going to use the `ReactiveDict`. A ReactiveDict stores an arbitrary set of key-value pairs. Use it to manage internal state in your components, ie. like the currently selected item in a list. To know more about how `ReactiveDict` works you can click on this [link](https://docs.meteor.com/api/reactive-dict.html), and there you will find everything you need to know and everything you can do with it.
+To keep the state we're going to use the `ReactiveDict`. A ReactiveDict stores an arbitrary set of key-value pairs. Use it to manage the internal state in your components, ie. like the currently selected item in a list. To know more about how `ReactiveDict` works you can click on this [link](https://docs.meteor.com/api/reactive-dict.html), and there you will find everything you need to know and everything you can do with it.
 
 For now, we just need to install the `reactive-dict` package to our app. Simply run the command below on your app root directory:
 
@@ -16,7 +16,7 @@ For now, we just need to install the `reactive-dict` package to our app. Simply 
 meteor add reactive-dict
 ```
 
-Then we need to set up a new `ReactiveDict` and attach it to the body template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as its template renders in the screen:
+Then we need to set up a new `ReactiveDict` and attach it to the body template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as the template renders in the screen:
 
 `imports/ui/App.js`
 
@@ -81,11 +81,11 @@ The button in the UI to toggle our state will look something like this:
 ...
 ```
 
-You may notice we're using for the first time a conditional test, and it's pretty straightforward. You can learn more about the conditional test _if_ [here](https://guide.meteor.com/v1.3/blaze.html#builtin-block-helpers). We're also using a helper called `hideCompleted` that we didn't create yet, but we'll shortly.
+You may notice we're using for the first time a conditional test, and it's pretty straightforward. You can learn more about the conditional test _if_ [here](https://guide.meteor.com/v1.3/blaze.html#builtin-block-helpers). We're also using a helper called `hideCompleted` that we didn't create yet, but we will shortly.
 
 ## 6.2: Button style
 
-You should add some style to your button so it does not look gray and without a good contrast. You can use the styles below as a reference:
+You should add some style to your button so it doesn't look gray and without good contrast. You can use the styles below as a reference:
 
 `client/main.css`
 
