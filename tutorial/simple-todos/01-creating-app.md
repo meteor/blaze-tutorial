@@ -19,13 +19,13 @@ npm install --global meteor
 
 ## 1.2: Create Meteor Project
 
-The easiest way to setup Meteor with React is by using the command `meteor create` with the option `--blaze` and your project name:
+The easiest way to set up Meteor with React is by using the command `meteor create` with the option `--blaze` and your project name:
 
 ```
 meteor create --blaze simple-todos-blaze
 ```
 
-Meteor will create all the necessary files for you. 
+After this, Meteor will create all the necessary files for you. 
 
 The files located in the `client` directory are setting up your client side (web), you can see for example `client/main.js` which is where your app begins on the client side.
 
@@ -73,7 +73,7 @@ node_modules/         # packages installed by npm
 
 ## 1.3: Create Task Component
 
-To start working on our todo list app, let's replace the code of the default starter app with the code below. Then we'll talk about what it does.
+To start working on our todo list app, let's replace the code of the default starter app with the code below. From there, we'll talk about what it does.
 
 First, let's remove the body from our HTML entry-point (leaving just the `<head>` tag):
 
@@ -111,7 +111,7 @@ Now we need the data to render on this page.
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet let's define some sample data which will be used shortly to render a list of tasks. It will be an array, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your file `ui` and type this code on it:
+As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your file `ui` and type this code on it:
 
 `imports/ui/App.js`
 
@@ -152,29 +152,29 @@ Everything inside `<template>` tags is compiled into Meteor templates, which can
 
 Also, the `body` section can be referenced in your JavaScript with `Template.body`. Think of it as a special "parent" template, that can include the other child templates.
 
-All of the code in your HTML files is compiled with [Meteor's Spacebars compiler](http://blazejs.org/api/spacebars.html). Spacebars uses statements surrounded by double curly braces such as `{% raw %}{{#each}}{% endraw %}` and `{% raw %}{{#if}}{% endraw %}` to let you add logic and data to your views.
+All of the code in your HTML files will be compiled with [Meteor's Spacebars compiler](http://blazejs.org/api/spacebars.html). Spacebars uses statements surrounded by double curly braces such as `{% raw %}{{#each}}{% endraw %}` and `{% raw %}{{#if}}{% endraw %}` to let you add logic and data to your views.
 
 You can pass data into templates from your JavaScript code by defining helpers. In the code above, we defined a helper called `tasks` on `Template.body` that returns an array. Inside the body tag of the HTML, we can use `{% raw %}{{#each tasks}}{% endraw %}` to iterate over the array and insert a `task` template for each value. Inside the `#each` block, we can display the `text` property of each array item using `{% raw %}{{text}}{% endraw %}`.
 
 
 ## 1.6 Mobile look
 
-Let's see how your app is looking on Mobile. You can simulate a mobile environment by `right clicking` your app in the browser (we are assuming you are using Google Chrome, as it is the most popular browser today) and then `inspect`, this will open a new window inside your browser called `Dev Tools`. In the `Dev Tools` you have a small icon showing a Mobile device and a Tablet:
+Let's see how your app is looking on Mobile. You can simulate a mobile environment by `right clicking` your app in the browser (we are assuming you are using Google Chrome, as it is the most popular browser) and then `inspect`, this will open a new window inside your browser called `Dev Tools`. In the `Dev Tools` you have a small icon showing a Mobile device and a Tablet:
 
 <img width="500px" src="/simple-todos/assets/step01-dev-tools-mobile-toggle.png"/>
 
-Click on it and then select the phone that you want to simulate and in the top bar.
+Click on it and then select the phone that you want to simulate and in the top nav bar.
 
-> You can also check your app in your cellphone. To do so, connect to your App using your local IP in the navigation browser of your mobile browser.
+> You can also check your app in your personal cellphone. To do so, connect to your App using your local IP in the navigation browser of your mobile browser.
 >
-> This command should print your local IP for you on Unix systems at least
+> This command should print your local IP for you on Unix systems
 `ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'`
 
-You will see something like this:
+You should see the following:
 
 <img width="200px" src="/simple-todos/assets/step01-mobile-without-meta-tags.png"/>
 
-As you can see everything is small as we are not adjusting the view port for mobile devices. You can fix this and other similar issues by adding these lines to your `client/main.html` file, inside the `head` tag, after the `title`.
+As you can see, everything is small, as we are not adjusting the view port for mobile devices. You can fix this and other similar issues by adding these lines to your `client/main.html` file, inside the `head` tag, after the `title`.
 
 `client/main.html`
 ```html
@@ -193,6 +193,6 @@ Now your app should look like this:
 <img width="200px" src="/simple-todos/assets/step01-mobile-with-meta-tags.png"/>
 
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
+> Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
 
-In the next step we are going to work with our MongoDB database to store our tasks.
+In the next step we are going to work with our MongoDB database to be able to store our tasks.
