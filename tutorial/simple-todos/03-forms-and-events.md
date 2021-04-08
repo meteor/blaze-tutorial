@@ -2,7 +2,7 @@
 title: "3: Forms and Events"
 ---
 
-All apps need to allow the user to perform some types of interaction with the data that is stored. In our case, the first type of interaction is to insert new tasks. Without it, our To-Do app wouldn't be very helpful.  
+All apps need to allow the user to perform some types of interaction with the data that is stored. In our case, the first type of interaction we'll need is a new tasks. Without it, our To-Do app wouldn't be very helpful.  
 
 One of the main ways in which a user can insert or edit data in a website is through forms. In most cases it is a good idea to use the `<form>` tag since it gives semantic meaning to the elements inside it.
 
@@ -109,11 +109,11 @@ In our case above, we are listening to the `submit` event on any element that ma
 
 The event handler gets an argument called `event` that has some information about the event that was triggered. In this case `event.target` is our form element, and we can get the value of our input with `event.target.text.value`. You can see all the other properties of the event object by adding a `console.log(event)` and inspecting the object in your browser console.
 
-Finally, in the last line of the event handler, we clear the input to prepare for another new task.
+Finally, in the last line of the event handler, we need to clear the input to prepare for another new task.
 
 ## 3.5: Show Newest Tasks First
 
-Now you just need to make a change which will make users happy: we need to show the newest tasks first. We can accomplish quite quickly by sorting our [Mongo](https://guide.meteor.com/collections.html#mongo-collections) query.
+All that is left now is to make one final change: we need to show the newest tasks first. We can accomplish this quite quickly by sorting our [Mongo](https://guide.meteor.com/collections.html#mongo-collections) query.
 
 `imports/ui/App.js`
 ```js
@@ -131,7 +131,7 @@ Template.form.events({
 
 ```
 
-Your app should look like this:
+Now your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step03-form-new-task.png"/>
 
