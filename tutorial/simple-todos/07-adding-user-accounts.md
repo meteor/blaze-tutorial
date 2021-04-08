@@ -4,7 +4,7 @@ title: '7: Adding User Accounts'
 
 ## 7.1: Password Authentication
 
-Meteor already comes with a basic authentication and account management system out of the box, so you only need to add the `accounts-password` to enable username and password authentication:
+Meteor already comes with a basic authentication and account management system out-of-the box, so you only need to add the `accounts-password` to enable username and password authentication:
 
 ```
 meteor add accounts-password
@@ -155,7 +155,7 @@ To achieve this we will use a conditional test inside our main div on `App.html`
 ...
 ```
 
-So, as you can see, if the use is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
+So, as you can see, if the user is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
 
 `imports/ui/App.js`
 
@@ -219,7 +219,7 @@ Ok, let's style the login form now:
 }
 ```
 
-Now your login form should be centralized and beautiful.
+Now your login form should be centralized and look beautiful.
 
 ## 7.6: Server startup
 
@@ -229,7 +229,7 @@ Every task should have an owner from now on. So go to your database, as you lear
 
 Change your `server/main.js` to add the seed tasks using your `meteorite` user as owner.
 
-Make sure you restart the server after this change so `Meteor.startup` block will run again. This is probably going to happen automatically any way as you are going to make changes in the server side code.
+Make sure you restart the server after this change so `Meteor.startup` block can run again. This is probably going to happen automatically as you make changes in the server side code.
 
 `server/main.js`
 
@@ -407,7 +407,7 @@ Remember to style your user name as well.
 
 Phew! You have done quite a lot in this step. Authenticated the user, set the user in the tasks and provided a way for the user to log out.
 
-Your app should look like this:
+Your app should now look like this:
 
 <img width="200px" src="/simple-todos/assets/step07-login.png"/>
 <img width="200px" src="/simple-todos/assets/step07-logout.png"/>
