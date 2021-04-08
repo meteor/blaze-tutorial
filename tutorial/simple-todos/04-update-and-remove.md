@@ -8,7 +8,7 @@ Up until now you have only inserted documents into our collection. Let's take a 
 
 First, you need to add a `checkbox` element to your `task` template.
 
-Also, let's create a new file to our `task` template, so we can start to separate the logic in our app.
+Next, let's create a new file to our `task` template, so we can start to separate the logic in our app.
 
 `imports/ui/Task.html`
 
@@ -23,7 +23,7 @@ Also, let's create a new file to our `task` template, so we can start to separat
 
 ## 4.2: Toggle Checkbox
 
-Now you can update your task document toggling its `isChecked` field.
+Now you can update your task document by toggling its `isChecked` field.
 
 Create a new file called `Task.js` so we can have our handlers to the `task` template: 
 
@@ -61,7 +61,7 @@ Template.body.helpers({
 ...
 ```
 
-Your app should look like this:
+Now your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step04-checkbox.png"/>
 
@@ -103,7 +103,7 @@ Your app should look like this:
 
 ## 4.4: Getting data in event handlers
 
-Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that is available in the client side. Once we have the `_id`, we can use update and remove to modify the relevant task, and that's why our code do update and remove a task is working in our app.
+Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that are available in the client side. Once we have the `_id`, we can use, update, and remove the relevant task, and that's how our code do update and remove a task is working in our app.
 
 > Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step04) 
 
