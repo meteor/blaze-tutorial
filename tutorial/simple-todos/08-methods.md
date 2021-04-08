@@ -2,7 +2,7 @@
 title: "8: Methods"
 ---
 
-Before this step, any user of the app could edit any part of the database making changes directly in the client. This might be fine for quick prototyping, but real applications need to control access to its data.
+Before this step, any user could edit any part of the database making changes directly in the client side. This might be fine for quick prototyping, but real applications need to control access to its data.
 
 In Meteor, the easiest way to make changes in the server safely is by declaring _methods_, instead of calling `insert`, `update`, or `remove` directly in the client.
 
@@ -16,7 +16,7 @@ Meteor Method is a way to communicate with your server using the function `Meteo
 
 Every newly created Meteor project has the `insecure` package installed by default.
 
-This package allows us to edit the database from the client as we said above, which is useful for quick prototyping.
+This package allows us to edit the database from the client, which is useful for quick prototyping.
 
 We need to remove it, because as the name suggests it is `insecure`.
 
@@ -24,7 +24,7 @@ We need to remove it, because as the name suggests it is `insecure`.
 meteor remove insecure
 ```
 
-Now your app changes don't work anymore as you have revoked all client-side database permissions. Try to insert a new task for example, you are going to see `insert failed: Access denied` in your browser console.
+Now your app changes wont work anymore as you have revoked all client-side database permissions. Try to insert a new task for example, you are going to see `insert failed: Access denied` in your browser console.
 
 ## 8.2: Add Task Methods
 
@@ -36,7 +36,7 @@ Methods should be defined in code executed both in the client, and the server fo
 
 ### Optimistic UI
 
-When we call a method on the client using `Meteor.call`, two things happen in parallel:
+When we call a method on the client using `Meteor.call`, two things happen:
 
 1. The client sends a request to the sever to run the method in a secure environment.
 2. A simulation of the method runs directly on the client trying to predict the outcome of the call.
@@ -161,15 +161,15 @@ Template.task.events({
 });
 ```
 
-Now your inputs and buttons will start working again. What you gained?
+Now your inputs and buttons will start working again. So what have you gained?
 
 1. When we insert tasks into the database, we can securely verify that the user is authenticated; the `createdAt` field is correct; and the `userId` is legitimate.
-1. We can add extra validation logic to the methods later if we want.
-1. Our client code is more isolated from our database logic. Instead of a lot of stuff happening in our event handlers, we have methods callable from anywhere.
+2. We can add extra validation logic to the methods later if we want.
+3. Our client code is more isolated from our database logic. Instead of a lot of stuff happening in our event handlers, we have methods callable from anywhere.
 
 ## 8.4: api and db folders
 
-We would like to take a moment here to think, the folder where the collection file is located is `api` but API in your project means a communication layer between server and client but the collection is not performing this role anymore. So you should move your `TasksCollection` file to a new folder called `db`.
+Lets take a moment here to think. The folder where the collection file is located is `api` but API in your project means a communication layer between server and client but the collection is not performing this role anymore. So you should move your `TasksCollection` file to a new folder called `db`.
 
 This change is not required but it's recommended to keep our names consistent with the reality.
 
