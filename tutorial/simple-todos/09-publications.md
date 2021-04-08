@@ -2,11 +2,11 @@
 title: '9: Publications'
 ---
 
-Now we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()` we will get every task in the collection. That's not good if users of our application want to store privacy-sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
+Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()` we will get every task in the collection. That's not good if users of our application want to store privacy-sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
 
 ## 9.1: autopublish
 
-Just like with `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. So you should remove it:
+Just like with `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. Remove it by using the command line below:
 
 ```
 meteor remove autopublish
@@ -36,7 +36,7 @@ Meteor.publish('tasks', function publishTasks() {
 
 As you are using `this` inside this function you should not use `arrow function` (`=>`) as the arrow function does not provide a context for `this`, you need to use the function in the traditional way, using the `function` keyword.
 
-The last part is to make sure your server is registering this publication, you can do this importing this file, to force the evaluation, in the `server/main.js`.
+The last part is to make sure your server is registering this publication, you can do this importing the file, to force the evaluation in the `server/main.js`.
 
 `server/main.js`
 
@@ -50,7 +50,7 @@ import '/imports/api/tasksPublications';
 
 ## 9.3: Tasks Subscription
 
-Then we can subscribe to that publication in the client.
+From here, we can subscribe to that publication in the client.
 
 As we want to receive changes from this publication we are going to `subscribe` to it inside a `Tracker.autorun`.
 
