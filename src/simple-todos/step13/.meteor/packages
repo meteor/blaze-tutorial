@@ -25,3 +25,4 @@ meteortesting:mocha
 quave:testing
 hot-module-replacement@0.2.0
 blaze-hot
+dev-error-overlay

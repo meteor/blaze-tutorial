@@ -23,7 +23,7 @@ const getTasksFilter = () => {
   return { userFilter, pendingOnlyFilter };
 };
 
-Template.mainContainer.onCreated(function bodyOnCreated() {
+Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 });
 

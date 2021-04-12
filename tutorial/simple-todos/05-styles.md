@@ -155,7 +155,9 @@ Now you need to add some elements around your components. Also, we need to apply
 `imports/ui/App.html`
 
 ```html
-  <body>
+..
+
+  <template name="mainContainer">
       <div class="app">
           <header>
               <div class="app-bar">
@@ -175,7 +177,7 @@ Now you need to add some elements around your components. Also, we need to apply
               </ul>
           </div>
       </div>
-  </body>
+  </template>
 
 ...
 ```

@@ -6,7 +6,7 @@ import './Task.js';
 
 const HIDE_COMPLETED_STRING = 'hideCompleted';
 
-Template.mainContainer.onCreated(function bodyOnCreated() {
+Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 });
 

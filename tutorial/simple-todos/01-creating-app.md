@@ -89,6 +89,10 @@ Create a new directory with the name `imports` inside `simple-todos-blaze` folde
 
 ```html
 <body>
+    {{> mainContainer }}
+</body>
+
+<template name="mainContainer">
     <div class="container">
         <header>
             <h1>Todo List</h1>
@@ -100,7 +104,7 @@ Create a new directory with the name `imports` inside `simple-todos-blaze` folde
             {{/each}}
         </ul>
     </div>
-</body>
+</template>
 
 <template name="task">
     <li>{{text}}</li>
@@ -154,7 +158,7 @@ Also, the `body` section can be referenced in your JavaScript with `Template.bod
 
 All of the code in your HTML files will be compiled with [Meteor's Spacebars compiler](http://blazejs.org/api/spacebars.html). Spacebars uses statements surrounded by double curly braces such as `{% raw %}{{#each}}{% endraw %}` and `{% raw %}{{#if}}{% endraw %}` to let you add logic and data to your views.
 
-You can pass data into templates from your JavaScript code by defining helpers. In the code above, we defined a helper called `tasks` on `Template.body` that returns an array. Inside the body tag of the HTML, we can use `{% raw %}{{#each tasks}}{% endraw %}` to iterate over the array and insert a `task` template for each value. Inside the `#each` block, we can display the `text` property of each array item using `{% raw %}{{text}}{% endraw %}`.
+You can pass data into templates from your JavaScript code by defining helpers. In the code above, we defined a helper called `tasks` on `Template.mainContainer` that returns an array. Inside the template tag of the HTML, we can use `{% raw %}{{#each tasks}}{% endraw %}` to iterate over the array and insert a `task` template for each value. Inside the `#each` block, we can display the `text` property of each array item using `{% raw %}{{text}}{% endraw %}`.
 
 
 ## 1.6 Mobile look
@@ -197,6 +201,13 @@ Now your app should look like this:
 
 Meteor by default when using Blaze is already adding for you a package called `hot-module-replacement`. This package updates the javascript modules in a running app that were modified during a rebuild. Reduces the feedback cycle while developing, so you can view and test changes quicker (it even updates the app before the build has finished). You are also not going to lose the state, your app code will be updated, and your state will be the same.
 
+You should also add the package `dev-error-overlay` at this point, so you can see the errors in your web browser.
+
+```shell
+meteor add dev-error-overlay
+```
+
+You can try to make some mistakes and then you are going to see the errors in the browser and not only in the console.
 
 > Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
 
