@@ -193,6 +193,11 @@ Now your app should look like this:
 <img width="200px" src="/simple-todos/assets/step01-mobile-with-meta-tags.png"/>
 
 
+## 1.7 Hot Module Replacement
+
+Meteor by default when using Blaze is already adding for you a package called `hot-module-replacement`. This package updates the javascript modules in a running app that were modified during a rebuild. Reduces the feedback cycle while developing, so you can view and test changes quicker (it even updates the app before the build has finished). You are also not going to lose the state, your app code will be updated, and your state will be the same.
+
+
 > Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
 
 In the next step we are going to work with our MongoDB database to be able to store our tasks.
