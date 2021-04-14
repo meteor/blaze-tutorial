@@ -120,7 +120,7 @@ import { Template } from 'meteor/templating';
  
 import './App.html';
  
-Template.app.helpers({
+Template.body.helpers({
   tasks: [
     { text: 'This is task 1' },
     { text: 'This is task 2' },
