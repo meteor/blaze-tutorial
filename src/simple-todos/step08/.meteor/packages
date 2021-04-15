@@ -20,5 +20,8 @@ typescript@4.1.2              # Enable TypeScript syntax in .ts and .tsx modules
 shell-server@0.5.0            # Server-side component of the `meteor shell` command
 
 autopublish@1.0.7             # Publish all data to the clients (for prototyping)
-reactive-dict
-accounts-password
+reactive-dict@1.3.0
+accounts-password@1.7.0
+hot-module-replacement@0.2.0
+blaze-hot
+dev-error-overlay

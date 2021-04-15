@@ -63,7 +63,7 @@ As we want to receive changes from this publication we are going to `subscribe` 
 const IS_LOADING_STRING = "isLoading";
 ...
 
-Template.body.onCreated(function bodyOnCreated() {
+Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 
   const handler = Meteor.subscribe('tasks');
@@ -74,7 +74,7 @@ Template.body.onCreated(function bodyOnCreated() {
 
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   ...,
   isLoading() {
     const instance = Template.instance();

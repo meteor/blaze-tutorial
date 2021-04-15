@@ -3,7 +3,7 @@ import { TasksCollection } from '../api/TasksCollection';
 import './App.html';
 import './Task.js';
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     return TasksCollection.find({}, { sort: { createdAt: -1 } });
   },

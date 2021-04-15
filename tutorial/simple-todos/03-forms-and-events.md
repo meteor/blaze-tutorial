@@ -25,16 +25,16 @@ Create a new template called `form` inside the `App.html` file and inside of the
 </template>
 ```
 
-## 3.2: Update the body element
+## 3.2: Update the mainContainer template element
 
-Then we can simply add this to our `body` component above your list of tasks:
+Then we can simply add this to our `mainContainer` template above your list of tasks:
 
 `imports/ui/App.html`
 ```html
 
 ...
 
-<body>
+<template name="mainContainer">
     <div class="container">
         <header>
             <h1>Todo List</h1>
@@ -48,7 +48,7 @@ Then we can simply add this to our `body` component above your list of tasks:
             {{/each}}
         </ul>
     </div>
-</body>
+</template>
 
 ...
 
@@ -119,7 +119,7 @@ All that is left now is to make one final change: we need to show the newest tas
 ```js
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     return TasksCollection.find({}, { sort: { createdAt: -1 } });
   },

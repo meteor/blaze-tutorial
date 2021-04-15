@@ -16,7 +16,7 @@ For now, we just need to install the `reactive-dict` package to our app. Simply 
 meteor add reactive-dict
 ```
 
-Then we need to set up a new `ReactiveDict` and attach it to the body template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as the template renders in the screen:
+Then we need to set up a new `ReactiveDict` and attach it to the `mainContainer` template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as the template renders in the screen:
 
 `imports/ui/App.js`
 
@@ -29,7 +29,7 @@ import './App.html';
 import './Task.js';
 
 
-Template.body.onCreated(function bodyOnCreated() {
+Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 });
 
@@ -47,7 +47,7 @@ const HIDE_COMPLETED_STRING = "hideCompleted";
 
 ...
 
-Template.body.events({
+Template.mainContainer.events({
   "click #hide-completed-button"(event, instance) {
     const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
@@ -102,14 +102,14 @@ You should add some style to your button so it doesn't look gray and without goo
 
 ## 6.3: Filter Tasks
 
-Now, we need to update `Template.body.helpers`. The code below verifies if the variable `hideCompleted` is set to `true` and if yes, we filter our query just to get task non completed. We also have a new helper called `hideCompleted` that will help us in the UI well we want to know if we're filtering or not:
+Now, we need to update `Template.mainContainer.helpers`. The code below verifies if the variable `hideCompleted` is set to `true` and if yes, we filter our query just to get task non completed. We also have a new helper called `hideCompleted` that will help us in the UI well we want to know if we're filtering or not:
 
 `imports/ui/App.js`
 
 ```js
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
@@ -152,7 +152,7 @@ You should avoid adding zero to your app bar when there are no pending tasks.
 ```js
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   ...,
   incompleteCount() {
     const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
@@ -166,7 +166,7 @@ Template.body.helpers({
 `imports/ui/App.html`
 
 ```html
-<body>
+<template name="mainContainer">
     <div class="app">
         <header>
             <div class="app-bar">

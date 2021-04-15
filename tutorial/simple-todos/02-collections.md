@@ -71,7 +71,7 @@ import { Template } from 'meteor/templating';
 import { TasksCollection } from "../api/TasksCollection";
 import './App.html';
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     return TasksCollection.find({});
   },
