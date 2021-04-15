@@ -166,7 +166,7 @@ const getUser = () => Meteor.user();
 const isUserLogged = () => !!getUser();
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   ...,
   isUserLogged() {
     return isUserLogged();
@@ -296,7 +296,7 @@ const getTasksFilter = () => {
 
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
@@ -371,7 +371,7 @@ Now, let's create the `getUser` helper and implement the event that will log out
 ```js
 ...
 
-Template.body.events({
+Template.mainContainer.events({
   ...,
   'click .user'() {
     Meteor.logout();
@@ -380,7 +380,7 @@ Template.body.events({
 
 ...
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   ...,
   getUser() {
     return getUser();

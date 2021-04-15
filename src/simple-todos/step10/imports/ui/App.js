@@ -25,7 +25,7 @@ const getTasksFilter = () => {
   return { userFilter, pendingOnlyFilter };
 };
 
-Template.body.onCreated(function bodyOnCreated() {
+Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 
   const handler = Meteor.subscribe('tasks');
@@ -34,7 +34,7 @@ Template.body.onCreated(function bodyOnCreated() {
   });
 });
 
-Template.body.events({
+Template.mainContainer.events({
   'click #hide-completed-button'(event, instance) {
     const currentHideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
     instance.state.set(HIDE_COMPLETED_STRING, !currentHideCompleted);
@@ -44,7 +44,7 @@ Template.body.events({
   },
 });
 
-Template.body.helpers({
+Template.mainContainer.helpers({
   tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);

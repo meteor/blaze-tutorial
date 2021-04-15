@@ -1,4 +1,9 @@
 <body>
+{{> mainContainer}}
+</body>
+
+
+<template name="mainContainer">
     <div class="container">
         <header>
             <h1>Todo List</h1>
@@ -12,7 +17,7 @@
             {{/each}}
         </ul>
     </div>
-</body>
+</template>
 
 <template name="form">
     <form class="task-form">
