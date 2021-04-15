@@ -175,7 +175,7 @@ This change is not required but it's recommended to keep our names consistent wi
 
 Remember to fix your imports, you have 3 imports to `TasksCollection` in the following files:
 - `imports/api/tasksMethods.js`
-- `imports/ui/App.jsx`
+- `imports/ui/App.js`
 - `server/main.js`
 
 they should be changed from `import { TasksCollection } from '/imports/api/TasksCollection';` to `import { TasksCollection } from '/imports/db/TasksCollection';`.
