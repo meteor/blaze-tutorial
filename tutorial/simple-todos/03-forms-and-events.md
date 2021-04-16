@@ -119,7 +119,7 @@ All that is left now is to make one final change: we need to show the newest tas
 ```js
 ...
 
-Template.mainContainer.helpers({
+Template.body.helpers({
   tasks() {
     return TasksCollection.find({}, { sort: { createdAt: -1 } });
   },
