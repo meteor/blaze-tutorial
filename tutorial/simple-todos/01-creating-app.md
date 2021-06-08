@@ -19,7 +19,7 @@ npm install --global meteor
 
 ## 1.2: Create Meteor Project
 
-The easiest way to set up Meteor with React is by using the command `meteor create` with the option `--blaze` and your project name:
+The easiest way to set up Meteor with Blaze is by using the command `meteor create` with the option `--blaze` and your project name:
 
 ```
 meteor create --blaze simple-todos-blaze --release 2.2 
