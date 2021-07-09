@@ -29,7 +29,7 @@ After this, Meteor will create all the necessary files for you.
 
 The files located in the `client` directory are setting up your client side (web), you can see for example `client/main.js` which is where your app begins on the client side.
 
-Also, check the `server` directory where Meteor is setting up the server side (Node.js), you can see the `server/main.js`. If Meteor, you don't need to install MongoDB as Meteor provides an embedded version of it ready for you to use.
+Also, check the `server` directory where Meteor is setting up the server side (Node.js), you can see the `server/main.js`. In Meteor, you don't need to install MongoDB as Meteor provides an embedded version of it ready for you to use.
 
 You can define which are the main files (client and server) on your `package.json` like this:
 
