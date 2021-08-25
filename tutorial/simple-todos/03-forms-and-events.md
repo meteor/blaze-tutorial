@@ -78,7 +78,7 @@ Now we need to add a listener to the `submit` event on the form:
 });
 
 Template.form.events({
-  "submit .task-form"(event) {
+  "submit .task-form": (event) => {
     // Prevent default browser form submit
     event.preventDefault();
 
