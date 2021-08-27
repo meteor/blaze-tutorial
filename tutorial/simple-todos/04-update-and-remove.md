@@ -21,6 +21,8 @@ Next, let's create a new file to our `task` template, so we can start to separat
 </template>
 ```
 
+Don't forget to remove the template also named `task` in `imports/ui/App.html`.
+
 ## 4.2: Toggle Checkbox
 
 Now you can update your task document by toggling its `isChecked` field.
