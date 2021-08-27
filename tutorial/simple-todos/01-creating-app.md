@@ -5,15 +5,13 @@ title: "1: Creating the app"
 ## 1.1: Install Meteor
 First we need to install Meteor.
 
-If you running on OSX or Linux run this command in your terminal:
-```shell
-curl https://install.meteor.com/ | sh
+On Windows, OS X and Linux, install the latest official Meteor release from your terminal:
+
+```bash
+npm install -g meteor
 ```
 
-If you are on Windows:
-```shell
-npm install --global meteor
-```
+If your user don't have permission to install global binaries and you need to use sudo, it's necessary to append --unsafe-perm to the above command.
 
 > You can check more details about Meteor installation [here](https://www.meteor.com/install)
 
