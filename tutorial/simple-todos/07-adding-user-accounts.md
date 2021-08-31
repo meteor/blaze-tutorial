@@ -328,7 +328,7 @@ Template.mainContainer.helpers({
 
 Also, update the `insert` call to include the field `userId` when creating a new task: 
 
-`imports/ui/Task.js`
+`imports/ui/App.js`
 ```js
 ...
 Template.form.events({
