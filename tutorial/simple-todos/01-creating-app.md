@@ -105,7 +105,7 @@ Now we need the data to render on this page.
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your file `ui` and type this code on it:
+As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your `ui` folder and type this code on it:
 
 `imports/ui/App.js`
 
