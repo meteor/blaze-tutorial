@@ -110,6 +110,21 @@ Template.login.events({
 
 ```
 
+
+Be sure to also import the login form in `App.js`.
+
+`/imports/ui/App.js`
+
+```js
+import { Template } from "meteor/templating";
+import { TasksCollection } from "../api/TasksCollection";
+import { ReactiveDict } from "meteor/reactive-dict";
+import "./App.html";
+import "./Task.js";
+import "./Login.js";
+...
+```
+
 Ok, now you have a form, let's use it.
 
 ## 7.4: Require Authentication
