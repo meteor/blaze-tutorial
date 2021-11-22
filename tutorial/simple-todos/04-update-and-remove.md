@@ -15,7 +15,7 @@ Next, let's create a new file to our `task` template, so we can start to separat
 ```html
 <template name="task">
     <li>
-        <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+        <input type="checkbox" checked="{{isChecked}}" class="toggle-checked" />
         <span>{{text}}</span>
     </li>
 </template>
