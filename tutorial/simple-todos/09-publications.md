@@ -2,11 +2,11 @@
 title: '9: Publications'
 ---
 
-Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()` we will get every task in the collection. That's not good if users of our application want to store privacy-sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
+Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()`, we will get every task in the collection. That's not good if users of our application want to store private and sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
 
 ## 9.1: autopublish
 
-Just like with `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. Remove it by using the command line below:
+Just like `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. Remove it by using the command line below:
 
 ```
 meteor remove autopublish
@@ -179,7 +179,7 @@ Only the owner of a task should be able to change certain things. You should cha
 
 Why this is important if we are not returning tasks from other users in the client?
 
-This is important because anyone can call Meteor `Methods` using the browser `console`. You can test this using your DevTools console tab and then type and hit enter: `Meteor.call('tasks.remove', 'xtPTsNECC3KPuMnDu');`. If you remove the validation from your remove Method and you pass one valid task `_id` from your database you will be able to remove it.
+This is important because anyone can call Meteor `Methods` using the browser `console`. You can test this using your DevTools console tab and then type: `Meteor.call('tasks.remove', 'xtPTsNECC3KPuMnDu');` and hit enter. If you remove the validation from your remove Method and you pass one valid task `_id` from your database, you will be able to remove it.
 
 > Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step09) 
 
