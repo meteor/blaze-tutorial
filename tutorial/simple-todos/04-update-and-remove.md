@@ -84,7 +84,7 @@ First add a button after text in your `task` template and receive:
 ...
 ```
 
-Now add the removal logic in the `Task.js`. It will be just a new event to the `task` template that is activated when the user clicks in a delete button, that is, any button with the class `delete`:
+Now add the removal logic in the `Task.js`. It will just be a new event to the `task` template that is activated when the user clicks on a delete button (i.e. any button with the class `delete`):
 
 `imports/ui/Task.js`
 
@@ -105,8 +105,8 @@ Your app should look like this:
 
 ## 4.4: Getting data in event handlers
 
-Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that are available in the client side. Once we have the `_id`, we can use, update, and remove the relevant task, and that's how our code do update and remove a task is working in our app.
+Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that is available in the client side. Once we have the `_id`, we can use, update, and remove the relevant task. That's how our code will update or remove a task.
 
 > Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step04) 
 
-In the next step we are going to improve the look of your app using CSS with Flexbox.
+In the next step, we are going to improve the look of your app using CSS with Flexbox.
