@@ -12,13 +12,13 @@ meteor add accounts-password
 
 > There are many more authentication methods supported. You can read more about the accounts system [here](https://docs.meteor.com/api/accounts.html).
 
-We also recommend you to install `bcrypt` node module, otherwise you are going to see a warning saying that you are using pure-Javascript implementation of it.
+We also recommend you to install `bcrypt` node module, otherwise you are going to see a warning saying that you are using pure-Javascript implementation.
 
 ```
 meteor npm install --save bcrypt
 ```
 
-> You should always use `meteor npm` instead of only `npm` so you always use the `npm` version pinned by Meteor, this helps you to avoid problems due to different versions of npm installing different modules.
+> You should always use `meteor npm` instead of `npm` so you always use the `npm` version pinned by Meteor. This helps you to avoid problems due to different versions of npm installing different modules.
 
 ## 7.2: Create User Account
 
@@ -125,7 +125,7 @@ import "./Login.js";
 ...
 ```
 
-Ok, now you have a form, let's use it.
+Now you have a form, it's time to use it.
 
 ## 7.4: Require Authentication
 
@@ -170,7 +170,7 @@ To achieve this we will use a conditional test inside our main div on `App.html`
 ...
 ```
 
-So, as you can see, if the user is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
+As you can see, if the user is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
 
 `imports/ui/App.js`
 
@@ -234,11 +234,11 @@ Ok, let's style the login form now:
 }
 ```
 
-Now your login form should be centralized and look beautiful.
+Now your login form should look beautiful and centralized.
 
 ## 7.6: Server startup
 
-Every task should have an owner from now on. So go to your database, as you learn before, and remove all the tasks from there:
+Every task should have an owner from now on. Go to your database, as you learnt before, and remove all the tasks from there:
 
 `db.tasks.remove({});`
 
@@ -287,7 +287,7 @@ Meteor.startup(() => {
 });
 ```
 
-See that we are using a new field called `userId` with our user `_id` field, we are also setting `createdAt` field.
+You can see that we are using a new field called `userId` with our user `_id` field. We are also setting `createdAt` field.
 
 ## 7.7: Task owner
 
@@ -362,7 +362,7 @@ Template.form.events({
 
 ## 7.8: Log out
 
-We also can better organize our tasks by showing the username of the owner below our app bar. Let's add a new `div` where the user can click and log out from the app:
+We can also organize our tasks by showing the username of the owner below our app bar. Let's add a new `div` where the user can click and log out from the app:
 
 
 `imports/ui/App.html`
@@ -379,7 +379,7 @@ We also can better organize our tasks by showing the username of the owner below
 ...
 ```
 
-Now, let's create the `getUser` helper and implement the event that will log out the user when they click on this `div`. The log out with Meteor is simply done by calling the function `Meteor.logout()`:
+Now, let's create the `getUser` helper and implement the event that will log out the user when they click on this `div`. Logging out is simply done by calling the function `Meteor.logout()`:
 
 `imports/ui/App.js`
 
@@ -420,13 +420,13 @@ Remember to style your user name as well.
 }
 ```
 
-Phew! You have done quite a lot in this step. Authenticated the user, set the user in the tasks and provided a way for the user to log out.
+Phew! You have done quite a lot in this step. Authenticated the user, set the user in the tasks, and provided a way for the user to log out.
 
 Your app should now look like this:
 
 <img width="200px" src="/simple-todos/assets/step07-login.png"/>
 <img width="200px" src="/simple-todos/assets/step07-logout.png"/>
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step07) 
+> Review: you can check how your code should look like [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step07) 
 
-In the next step we are going to start using Methods to only change the data after checking some conditions.
+In the next step, we are going to start using Methods to change the data after checking some conditions.
