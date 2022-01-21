@@ -10,13 +10,13 @@ The best place to run your Meteor app is [Galaxy](https://www.meteor.com/cloud).
 
 ## 12.1: Create your account
 
-Do you have a Meteor Cloud Account? No? Ok, let's fix it.
+Do you have a Meteor Cloud Account? No? No problem!
 
 Go to [cloud.meteor.com](https://cloud.meteor.com?isSignUp=true). You are going to see a form like this:
 
 <img width="500px" src="/simple-todos/assets/step12-sign-up.png"/>
 
-Sign up with GitHub and proceed from there. It's just going to ask you an username and password, you will need those to deploy your app.
+Sign up with GitHub and proceed from there. It's just going to ask you a username and password which you will need to deploy your app.
 
 Done, your account is created. You can use this account to access [atmospherejs.com](https://atmospherejs.com/), [Forums](https://forums.meteor.com) and much more including Galaxy free deploy.
 
@@ -26,9 +26,9 @@ Now you are ready to deploy, make sure you run `meteor npm install` before deplo
 
 You also need to choose a sub-domain to publish your app. We are going to use the main domain `meteorapp.com` that is free and included on any Galaxy plan.
 
-In this example we are going to use `blaze-tutorial.meteorapp.com` but make sure you select a different one, otherwise you are going to receive an error saying it is already used.
+In this example we are going to use `blaze-tutorial.meteorapp.com` but make sure you choose a different domain name, otherwise you are going to receive an error saying it is already used.
 
-> You can learn how to use custom domains on Galaxy [here](https://cloud-guide.meteor.com/custom-domains.html). Custom domains are available from starting in the Essentials plan. 
+> You can learn how to use custom domains on Galaxy [here](https://cloud-guide.meteor.com/custom-domains.html). Custom domains are available starting with the Essentials plan. 
 
 Run the deploy command:
 
@@ -75,4 +75,4 @@ This is huge, you have your Meteor app running on Galaxy, ready to be used by an
 
 > Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step12) 
 
-In the next step we are going to provide some ideas for you to continue developing your app and more content to see next.
+In the next step we are going to provide some ideas for you to continue developing your app.
