@@ -2,7 +2,7 @@
 title: "3: Forms and Events"
 ---
 
-All apps need to allow the user to perform some types of interaction with the data that is stored. In our case, the first type of interaction we'll need is a new tasks. Without it, our To-Do app wouldn't be very helpful.  
+All apps need to allow the user to perform some type of interaction with the data that is stored. In our case, the first type of interaction we'll need is a new tasks. Without it, our To-Do app wouldn't be very helpful.  
 
 One of the main ways in which a user can insert or edit data in a website is through forms. In most cases it is a good idea to use the `<form>` tag since it gives semantic meaning to the elements inside it.
 
