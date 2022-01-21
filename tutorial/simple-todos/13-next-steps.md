@@ -23,4 +23,4 @@ Here are some options for where you can go next:
 
 1. Read the [Meteor Guide](https://guide.meteor.com/) to learn about best practices and useful community packages.
 2. Check out the [complete documentation](https://docs.meteor.com/).
-3. Enroll in our online univeristy for free [here](https://university.meteor.com/).
+3. Enroll in our free [online univeristy](https://university.meteor.com/) and become a certified Meteor developer!
