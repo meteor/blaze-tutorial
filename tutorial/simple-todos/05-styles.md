@@ -4,7 +4,7 @@ title: '5: Styles'
 
 ## 5.1: CSS
 
-Our user interface up until this point has not looked the best. Let's change this and add some basic styling which will serve as the foundation for a more professional looking app.
+In this section, let's change the user interface so it looks more like a professional app. First, we'll add some basic styling.
 
 Replace the content of our `client/main.css` file with the one below, the idea is to have an app bar in the top, and a scrollable content including:
 
@@ -144,7 +144,7 @@ header {
 }
 ```
 
-> If you want to learn more about this stylesheet check this article about [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), and also this free [video tutorial](https://flexbox.io/) about it from [Wes Bos](https://twitter.com/wesbos).
+> If you want to learn more about this stylesheet, check this article about [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), and also this [video tutorial](https://flexbox.io/) by [Wes Bos](https://twitter.com/wesbos).
 >
 > Flexbox is an excellent tool to distribute and align elements in your UI.
 
@@ -186,6 +186,6 @@ Your app should look like this:
 
 <img width="200px" src="/simple-todos/assets/step05-styles.png"/>
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step05) 
+> Review: click [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step05) if you want to check how your code should look like.
 
-In the next step we are going to make this task list more interactive, for example, providing a way to filter tasks.
+In the next step, we will make this task list more interactive by filtering tasks.
