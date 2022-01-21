@@ -3,7 +3,7 @@ title: "1: Creating the app"
 ---
 
 ## 1.1: Install Meteor
-First we need to install Meteor.
+First, we need to install Meteor.
 
 Install the latest official Meteor release [following the steps in our docs](https://docs.meteor.com/install.html).
 
@@ -42,7 +42,7 @@ cd simple-todos-blaze
 meteor run
 ```
 
-Don't worry, Meteor will keep your app in sync with all your changes from now on.
+*Note*: Meteor will keep your app in sync with all your changes from now on.
 
 Take a quick look in all the files created by Meteor, you don't need to understand them now, but it's good to know where they are.
 
@@ -105,7 +105,7 @@ Now we need the data to render on this page.
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` on your `ui` folder and type this code on it:
+As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` in your `ui` folder and type the code below:
 
 `imports/ui/App.js`
 
@@ -153,7 +153,7 @@ You can pass data into templates from your JavaScript code by defining helpers. 
 
 ## 1.6 Mobile look
 
-Let's see how your app is looking on Mobile. You can simulate a mobile environment by `right clicking` your app in the browser (we are assuming you are using Google Chrome, as it is the most popular browser) and then `inspect`, this will open a new window inside your browser called `Dev Tools`. In the `Dev Tools` you have a small icon showing a Mobile device and a Tablet:
+Let's see how your app is looking on mobile. You can simulate a mobile environment by `right clicking` your app in the browser (we are assuming you are using Google Chrome, as it is the most popular browser) and then `inspect`, this will open a new window inside your browser called `Dev Tools`. In the `Dev Tools` you have a small icon showing a Mobile device and a Tablet:
 
 <img width="500px" src="/simple-todos/assets/step01-dev-tools-mobile-toggle.png"/>
 
@@ -189,7 +189,7 @@ Now your app should look like this:
 
 ## 1.7 Hot Module Replacement
 
-Meteor by default when using Blaze is already adding for you a package called `hot-module-replacement`. This package updates the javascript modules in a running app that were modified during a rebuild. Reduces the feedback cycle while developing, so you can view and test changes quicker (it even updates the app before the build has finished). You are also not going to lose the state, your app code will be updated, and your state will be the same.
+By default, when using Blaze with Meteor, a package called `hot-module-replacement` is already added for you. This package updates the javascript modules in a running app that were modified during a rebuild. Reduces the feedback cycle while developing, so you can view and test changes quicker (it even updates the app before the build has finished). You are also not going to lose the state, your app code will be updated, and your state will be the same.
 
 You should also add the package `dev-error-overlay` at this point, so you can see the errors in your web browser.
 
