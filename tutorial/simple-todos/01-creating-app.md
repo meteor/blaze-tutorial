@@ -15,7 +15,7 @@ The easiest way to set up Meteor with Blaze is by using the command `meteor crea
 meteor create --blaze simple-todos-blaze
 ```
 
-After this, Meteor will create all the necessary files for you. 
+After this, Meteor will create all the necessary files for you.
 
 The files located in the `client` directory are setting up your client side (web), you can see for example `client/main.js` which is where your app begins on the client side.
 
@@ -35,16 +35,16 @@ You can define which are the main files (client and server) on your `package.jso
 } 
 ```
 
-You can now run your Meteor app using: 
+You can now run your Meteor app using:
 
 ```shell
 cd simple-todos-blaze
 meteor run
 ```
 
-*Note*: Meteor will keep your app in sync with all your changes from now on.
+Don’t worry, Meteor will keep your app in sync with all your changes from now on.
 
-Take a quick look in all the files created by Meteor, you don't need to understand them now, but it's good to know where they are.
+Take a quick look at all the files created by Meteor, you don't need to understand them now, but it's good to know where they are.
 
 Here is a small summary of some files created:
 
@@ -53,7 +53,7 @@ client/main.js        # a JavaScript entry point loaded on the client
 client/main.html      # an HTML file that defines view templates
 client/main.css       # a CSS file to define your app's styles
 server/main.js        # a JavaScript entry point loaded on the server
-test/main.js          # a JavaScript entry point when running tests
+tests/main.js          # a JavaScript entry point when running tests
 package.json          # a control file for installing npm packages
 package-lock.json     # describes the npm dependency tree
 node_modules/         # packages installed by npm
@@ -67,13 +67,15 @@ To start working on our todo list app, let's replace the code of the default sta
 
 First, let's remove the body from our HTML entry-point (leaving just the `<head>` tag):
 
+`client/main.html`
+
 ```html
 <head>
   <title>Simple todo</title>
 </head>
 ```
 
-Create a new directory with the name `imports` inside `simple-todos-blaze` folder. Then we create some new files in the `imports/` directory:
+Create a new directory named `imports` inside the `simple-todos-blaze` folder. In the `imports` folder, create another directory with the name `ui` and add an `App.html` file inside of it with the content below:
 
 `imports/ui/App.html`
 
@@ -101,11 +103,21 @@ Create a new directory with the name `imports` inside `simple-todos-blaze` folde
 </template>
 ```
 
-Now we need the data to render on this page. 
+We just created two templates, the `mainContainer`, which will be rendered in the body of our app, and it will show a header and a list of tasks that will render each item using the `task` template. Now, we need some data to present sample tasks on this page.
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet, let's define some sample data which will be used to render a list of tasks. It will be an array of list items, and you can call it `tasks`. Go ahead and create a new file called `App.js` in your `ui` folder and type the code below:
+As you are not connecting to your server and your database yet, let’s define some sample data, which we will use shortly to render a list of tasks. Create a new file called `App.js` in your `ui` folder. Inside your entry-point file `client/main.js`, remove the rest of the code and import `imports/ui/App.js` like below:
+
+``` js
+import '../imports/ui/App';
+```
+
+When the app starts, the client-side entry-point will import the `App.js` file, which will also import the `App.html` template we created in the previous step.
+
+You can read more about how imports work and how to structure your code in the [Application Structure article](https://guide.meteor.com/structure.html) of the Meteor Guide.
+
+Now, you can type the code below:
 
 `imports/ui/App.js`
 
@@ -123,18 +135,9 @@ Template.mainContainer.helpers({
 });
 ```
 
-You can put anything as your `text` property on each task. Be creative!
+Adding a helper to the `mainContainer` template, you are able to define the array of tasks. You can put anything as your `text` property on each task. Be creative!
 
-
-Inside our front-end JavaScript entry-point file, `client/main.js`, we'll remove the rest of the code and import `imports/ui/App.js`:
-
-``` js
-import '../imports/ui/App.js';
-```
-
-You can read more about how imports work and how to structure your code in the [Application Structure article](https://guide.meteor.com/structure.html) of the Meteor Guide.
-
-Now let's find out what all these bits of code are doing!
+All right! Let's find out what all these bits of code are doing!
 
 ## 1.5: Rendering Data
 

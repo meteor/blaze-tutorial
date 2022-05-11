@@ -8,10 +8,10 @@ Before you begin - If you want to know more about Meteor check our [website](htt
 
 A few tips before you start:
 - If you want to check the final code for each step, you can always go to the [`src`](https://github.com/meteor/blaze-tutorial/tree/master/src) folder.
-- Each folder inside the [`src`](https://github.com/meteor/blaze-tutorial/tree/master/src) folder is a tutorial and a Meteor app which you can run at any time.
-  - Install it: `meteor npm install`
-  - Run it: `meteor`
-- If you see `..` in the code samples, it means that we are not showing all the code on this file or function. 
+- Each folder inside [`src`](https://github.com/meteor/blaze-tutorial/tree/master/src) folder is a tutorial. Inside each, you have one folder for each step's final state. Each step folder is a Meteor app - you can run them at any time.
+  - Install dependencies: `meteor npm install`
+  - Run the project: `meteor`
+- If you see `..` in the code samples, it means that we are not showing all the code on this file or function.
 
 
 The `Simple Todos` tutorial is the best place for you to start with Meteor and Blaze. Check it out [here](/simple-todos/).
