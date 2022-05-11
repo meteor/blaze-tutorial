@@ -107,17 +107,15 @@ We just created two templates, the `mainContainer`, which will be rendered in th
 
 ## 1.4: Create Sample Tasks
 
-As you are not connecting to your server and your database yet, let’s define some sample data, which we will use shortly to render a list of tasks. Create a new file called `App.js` in your `ui` folder. Inside your entry-point file `client/main.js`, remove the rest of the code and import `imports/ui/App.js` like below:
+Create a new file called `App.js` in your `ui` folder. Inside your entry-point `main.js` file, remove all the previous content and just add the code below to import the new file `imports/ui/App.js`:
+
+`client/main.js`
 
 ``` js
-import '../imports/ui/App';
+import '../imports/ui/App.js';
 ```
 
-When the app starts, the client-side entry-point will import the `App.js` file, which will also import the `App.html` template we created in the previous step.
-
-You can read more about how imports work and how to structure your code in the [Application Structure article](https://guide.meteor.com/structure.html) of the Meteor Guide.
-
-Now, you can type the code below:
+As you are not connecting to your server and database yet, let’s define some sample data, which we will use shortly to render a list of tasks. Add the code below to the `App.js` file:
 
 `imports/ui/App.js`
 
@@ -135,7 +133,9 @@ Template.mainContainer.helpers({
 });
 ```
 
-Adding a helper to the `mainContainer` template, you are able to define the array of tasks. You can put anything as your `text` property on each task. Be creative!
+Adding a helper to the `mainContainer` template, you are able to define the array of tasks. When the app starts, the client-side entry-point will import the `App.js` file, which will also import the `App.html` template we created in the previous step.
+
+You can read about how imports work and how to structure your code in this [Application Structure article](https://guide.meteor.com/structure.html).
 
 All right! Let's find out what all these bits of code are doing!
 
