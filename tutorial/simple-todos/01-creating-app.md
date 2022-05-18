@@ -194,7 +194,7 @@ Now your app should look like this:
 
 By default, when using Blaze with Meteor, a package called `hot-module-replacement` is already added for you. This package updates the javascript modules in a running app that were modified during a rebuild. Reduces the feedback cycle while developing, so you can view and test changes quicker (it even updates the app before the build has finished). You are also not going to lose the state, your app code will be updated, and your state will be the same.
 
-You should also add the package `dev-error-overlay` at this point, so you can see the errors in your web browser.
+You should also add the package [`dev-error-overlay`](https://atmospherejs.com/meteor/dev-error-overlay) at this point, so you can see the errors in your web browser.
 
 ```shell
 meteor add dev-error-overlay
@@ -202,6 +202,6 @@ meteor add dev-error-overlay
 
 You can try to make some mistakes and then you are going to see the errors in the browser and not only in the console.
 
-> Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01) 
+> Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01).
 
 In the next step we are going to work with our MongoDB database to be able to store our tasks.
