@@ -2,7 +2,7 @@
 title: '4: Update and Remove'
 ---
 
-Up until now you have only inserted documents into our collection. Let's take a look at how you can update and remove them by interacting with the user interface.
+Up until now, you have only inserted documents into our collection. Let’s look at how you can update and remove them by interacting with the user interface.
 
 ## 4.1: Add Checkbox
 
@@ -21,13 +21,13 @@ Next, let's create a new file to our `task` template, so we can start to separat
 </template>
 ```
 
-Don't forget to remove the template also named `task` in `imports/ui/App.html`.
+Don't forget to remove the template named `task` in `imports/ui/App.html`.
 
 ## 4.2: Toggle Checkbox
 
 Now you can update your task document by toggling its `isChecked` field.
 
-Create a new file called `Task.js` so we can have our handlers to the `task` template: 
+Create a new file called `Task.js` so we can have our handlers to the `task` template:
 
 `imports/ui/Task.js`
 
@@ -105,8 +105,8 @@ Your app should look like this:
 
 ## 4.4: Getting data in event handlers
 
-Inside the event handlers, `this` refers to an individual task object. In a collection, every inserted document has a unique `_id` field that can be used to refer to that specific document. We can get the `_id` of the current task with `this._id` as well as any other field that is available in the client side. Once we have the `_id`, we can use, update, and remove the relevant task. That's how our code will update or remove a task.
+In a collection, every inserted document has a unique `_id` field that can refer to that specific document. Inside the event handlers, `this` refers to an individual task object. We can get the `_id` of the current task with `this._id` and any other field available on the client-side. Once we have the `_id`, we can use, update, and remove the relevant task. That's how our code will update or remove a task.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step04) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step04).
 
-In the next step, we are going to improve the look of your app using CSS with Flexbox.
+In the next step, we will improve the look of your app using CSS with Flexbox.
