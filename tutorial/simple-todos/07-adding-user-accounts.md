@@ -4,7 +4,7 @@ title: '7: Adding User Accounts'
 
 ## 7.1: Password Authentication
 
-Meteor already comes with a basic authentication and account management system out-of-the box, so you only need to add the `accounts-password` to enable username and password authentication:
+Meteor already comes with a basic authentication and account management system out-of-the-box, so you only need to add the `accounts-password` to enable username and password authentication:
 
 ```
 meteor add accounts-password
@@ -12,17 +12,17 @@ meteor add accounts-password
 
 > There are many more authentication methods supported. You can read more about the accounts system [here](https://docs.meteor.com/api/accounts.html).
 
-We also recommend you to install `bcrypt` node module, otherwise you are going to see a warning saying that you are using pure-Javascript implementation.
+We also recommend you install the `bcrypt` node module. Otherwise, you will see a warning saying that you are using pure-Javascript implementation.
 
 ```
 meteor npm install --save bcrypt
 ```
 
-> You should always use `meteor npm` instead of `npm` so you always use the `npm` version pinned by Meteor. This helps you to avoid problems due to different versions of npm installing different modules.
+> You should always use `meteor npm` instead of `npm`, so you always use the `npm` version pinned by Meteor. This helps you avoid problems due to different versions of npm installing different modules.
 
 ## 7.2: Create User Account
 
-Now you can create a default user for our app, we are going to use `meteorite` as username, we just create a new user on server startup if we didn't find it in the database.
+Now you can create a default user for your app. We are going to use `meteorite` as a username. We create a new user on server startup if we don't find it in the database.
 
 `server/main.js`
 
@@ -51,9 +51,9 @@ You should not see anything different in your app UI yet.
 
 ## 7.3: Login Form
 
-You need to provide a way for the users to input the credentials and authenticate, for that we need a form.
+You need to provide a way for the users to input the credentials and authenticate. For that, we need a form.
 
-Our login form will be pretty simple, just two fields (username and password) and a button. You should use `Meteor.loginWithPassword(username, password);` to authenticate your user with the provided inputs.
+Our login form will be simple, with just two fields (username and password) and a button. You should use `Meteor.loginWithPassword(username, password);` to authenticate your user with the provided inputs.
 
 `imports/ui/Login.html`
 
@@ -110,8 +110,7 @@ Template.login.events({
 
 ```
 
-
-Be sure to also import the login form in `App.js`.
+Be sure also to import the login form in `App.js`.
 
 `/imports/ui/App.js`
 
@@ -125,15 +124,15 @@ import "./Login.js";
 ...
 ```
 
-Now you have a form, it's time to use it.
+Now you have a form, and it's time to use it.
 
 ## 7.4: Require Authentication
 
 Our app should only allow an authenticated user to access its task management features.
 
-We can accomplish that rendering the `Login` from template when we don't have an authenticated user, otherwise we return the form, filter, and list component.
+We can accomplish that by rendering the `Login` from the template when we don't have an authenticated user. Otherwise, we return the form, filter, and list component.
 
-To achieve this we will use a conditional test inside our main div on `App.html`: 
+To achieve this, we will use a conditional test inside our main div on `App.html`:
 
 `imports/ui/App.html`
 
@@ -170,7 +169,7 @@ To achieve this we will use a conditional test inside our main div on `App.html`
 ...
 ```
 
-As you can see, if the user is logged in, we render the whole app (`isUserLogged`), otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
+As you can see, if the user is logged in, we render the whole app (`isUserLogged`). Otherwise, we render the `Login` template. Let's now create our helper `isUserLogged`:
 
 `imports/ui/App.js`
 
@@ -238,13 +237,13 @@ Now your login form should look beautiful and centralized.
 
 ## 7.6: Server startup
 
-Every task should have an owner from now on. Go to your database, as you learnt before, and remove all the tasks from there:
+Every task should have an owner from now on. Go to your database, as you learned before, and remove all the tasks from there:
 
 `db.tasks.remove({});`
 
 Change your `server/main.js` to add the seed tasks using your `meteorite` user as owner.
 
-Make sure you restart the server after this change so `Meteor.startup` block can run again. This is probably going to happen automatically as you make changes in the server side code.
+After this change, ensure you restart the server so the `Meteor.startup` block can run again. This will probably automatically happen as you make changes in the server-side code.
 
 `server/main.js`
 
@@ -287,7 +286,7 @@ Meteor.startup(() => {
 });
 ```
 
-You can see that we are using a new field called `userId` with our user `_id` field. We are also setting `createdAt` field.
+We are using a new field called `userId` with our user `_id` field. We are also setting the `createdAt` field.
 
 ## 7.7: Task owner
 
@@ -341,7 +340,7 @@ Template.mainContainer.helpers({
 });
 ```
 
-Also, update the `insert` call to include the field `userId` when creating a new task: 
+Also, update the `insert` call to include the field `userId` when creating a new task:
 
 `imports/ui/App.js`
 ```js
@@ -362,7 +361,7 @@ Template.form.events({
 
 ## 7.8: Log out
 
-We can also organize our tasks by showing the username of the owner below our app bar. Let's add a new `div` where the user can click and log out from the app:
+We can also organize our tasks by showing the owner's username below our app bar. Let's add a new `div` where the user can click and log out from the app:
 
 
 `imports/ui/App.html`
@@ -379,7 +378,7 @@ We can also organize our tasks by showing the username of the owner below our ap
 ...
 ```
 
-Now, let's create the `getUser` helper and implement the event that will log out the user when they click on this `div`. Logging out is simply done by calling the function `Meteor.logout()`:
+Now, let's create the `getUser` helper and implement the event that will log out the user when they click on this `div`. Logging out is done by calling the function `Meteor.logout()`:
 
 `imports/ui/App.js`
 
@@ -429,4 +428,4 @@ Your app should now look like this:
 
 > Review: you can check how your code should look like [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step07) 
 
-In the next step, we are going to start using Methods to change the data after checking some conditions.
+In the next step, we will start using Methods to change the data after checking some conditions.
