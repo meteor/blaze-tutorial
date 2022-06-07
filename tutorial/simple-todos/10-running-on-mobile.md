@@ -4,11 +4,11 @@ title: "10: Running on Mobile"
 
 Currently, Meteor on Windows does not support mobile builds. If you are using Meteor on Windows, you should skip this step.
 
-So far, we've been building our app and testing only in a web browser, but Meteor has been designed to work across different platforms - your simple todo list website can become an iOS or Android app in just a few commands.
+So far, we've been building our app and testing only in a web browser, but Meteor has been designed to work across different platforms - your simple to-do list website can become an iOS or Android app in just a few commands.
 
-Meteor makes it easy to set up all the tools required to build mobile apps, but downloading all the programs can take a while - for Android the download is about 300MB and for iOS you need to install Xcode which is about 2GB. If you don't want to wait to download these tools, feel free to skip to the next step.
+Meteor makes it easy to set up all the tools required to build mobile apps, but downloading all the programs can take a while - for Android, the download is about 300MB, and for iOS, you need to install Xcode, which is about 2GB. If you don't want to wait to download these tools, feel free to skip to the next step.
 
-> Important: Mobile set up and settings are very dynamic, if you find any step below not working as specified or any linked document that is not up-to-date, please open an issue, and we are going to update it. You can also open PRs if you know what the change should be. 
+> Important: Mobile setup and settings are very dynamic. If you find any step below not working as specified or any linked document that is not up-to-date, please open an issue, and we will update it. You can also open PRs if you know what the change should be.
 
 ## 10.1: iOS Simulator
 
@@ -23,7 +23,7 @@ meteor add-platform ios
 meteor run ios
 ```
 
-You will see the iOS simulator pop up with your app running inside.
+You will see the iOS simulator pop up with your app running inside it.
 
 <img width="300px" src="/simple-todos/assets/step10-ios-simulator.png"/>
 
@@ -49,7 +49,7 @@ After some initialization, you will see an Android emulator pop up, running your
 
 ## 10.3: Android Device
 
-First, complete all the steps above to set up the Android tools on your system. Then, make sure you have [USB Debugging](http://developer.android.com/tools/device.html#developer-device-options) enabled on your phone and it is plugged into your computer with a USB cable. Also, you must quit the Android emulator before running on a device.
+First, complete all the steps above to set up the Android tools on your system. Then, make sure you have [USB Debugging](http://developer.android.com/tools/device.html#developer-device-options) enabled on your phone, and it is plugged into your computer with a USB cable. Also, you must quit the Android emulator before running on a device.
 
 Then, run the following command:
 
@@ -69,8 +69,8 @@ If you have an Apple developer account, you can also run your app on an iOS devi
 meteor run ios-device
 ```
 
-This will open Xcode with a project for your iOS app. You can use Xcode to then launch the app on any device or simulator that Xcode supports.
+This will open Xcode with a project for your iOS app. You can use Xcode to launch the app on any device or simulator that Xcode supports.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step10) 
+> Review: you can check how your code should be at the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step10).
 
-In the next step we are going to add automatic tests.
+In the next step, we will add automatic tests.
