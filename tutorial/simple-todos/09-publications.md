@@ -2,11 +2,11 @@
 title: '9: Publications'
 ---
 
-Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()`, we will get every task in the collection. That's not good if users of our application want to store private and sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
+Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. We have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()`, we will get every task in the collection. That's not good if our application users want to store private and sensitive data. We need to control which data Meteor sends to the client-side database.
 
 ## 9.1: autopublish
 
-Just like `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. Remove it by using the command line below:
+Like `insecure` in the last step, all new Meteor apps start with the `autopublish` package, which automatically synchronizes all the database contents to the client. Remove it by using the command line below:
 
 ```
 meteor remove autopublish
@@ -15,11 +15,11 @@ meteor remove autopublish
 When the app refreshes, the task list will be empty. Without the `autopublish` package, we will have to specify explicitly what the server sends to the client. The functions in Meteor that do this are `Meteor.publish` and `Meteor.subscribe`:
 
 - `Meteor.publish`: allows the data to be published from the server to the client;
-- `Meteor.subscribe`: allows the client code to ask for data to the client.
+- `Meteor.subscribe`: allows the client code to ask for data.
 
 ## 9.2: Tasks Publication
 
-You need to add first a publication to your server, this publication should publish all the tasks from the authenticated user. As in the `Methods` you can also use `this.userId` in publication functions to get the authenticated `userId`.
+You need to add first a publication to your server. This publication should publish all the tasks from the authenticated user. As in the `Methods`, you can also use `this.userId` in publication functions to get the authenticated `userId`.
 
 Create a new file called `tasksPublications.js` in the `api` folder.
 
@@ -34,9 +34,9 @@ Meteor.publish('tasks', function publishTasks() {
 });
 ```
 
-As you are using `this` inside this function you should not use `arrow function` (`=>`) as the arrow function does not provide a context for `this`, you need to use the function in the traditional way, using the `function` keyword.
+As you are using `this` inside this function, you should not use the `arrow function` (`=>`) as the arrow function does not provide a context for `this`. You need to use the function in the traditional way, using the `function` keyword.
 
-The last part is to make sure your server is registering this publication, you can do this importing the file, to force the evaluation in the `server/main.js`.
+The last part is to make sure your server is registering this publication. You can do this by importing the file to force the evaluation in the `server/main.js`.
 
 `server/main.js`
 
@@ -52,7 +52,7 @@ import '/imports/api/tasksPublications';
 
 From here, we can subscribe to that publication in the client.
 
-As we want to receive changes from this publication we are going to `subscribe` to it inside a `Tracker.autorun`.
+As we want to receive changes from this publication, we will `subscribe` to it inside a `Tracker.autorun`.
 
 `Tracker.autorun` run a function now and rerun it later whenever its dependencies change, which is perfect for us to know when our data is ready to be displayed to the user. You can learn more about the package `tracker` [here](https://docs.meteor.com/api/tracker.html).
 
@@ -87,7 +87,7 @@ Template.mainContainer.helpers({
 
 ## 9.4: Loading state
 
-Now we can show to the user when the data is loading. Let's use our new helper to show this:
+Now we can show the user when the data is loading. Let's use our new helper to show this:
 
 `imports/ui/App.html`
 
@@ -132,7 +132,7 @@ Calling `Meteor.publish` on the server registers a publication named `tasks`. Wh
 
 ## 9.5: Check User Permission
 
-Only the owner of a task should be able to change certain things. You should change your methods to check if the user that is authenticated is the same user that created the tasks.
+Only the owner of a task should be able to change certain things. You should change your methods to check if the authenticated user is the same user that created the tasks.
 
 `imports/api/tasksMethods.js`
 
@@ -177,10 +177,10 @@ Only the owner of a task should be able to change certain things. You should cha
 ..
 ```
 
-Why this is important if we are not returning tasks from other users in the client?
+Why is this important if we are not returning tasks from other users in the client?
 
-This is important because anyone can call Meteor `Methods` using the browser `console`. You can test this using your DevTools console tab and then type: `Meteor.call('tasks.remove', 'xtPTsNECC3KPuMnDu');` and hit enter. If you remove the validation from your remove Method and you pass one valid task `_id` from your database, you will be able to remove it.
+Because anyone can call Meteor `Methods` using the browser `console`. You can test this using your DevTools console tab and then type: `Meteor.call('tasks.remove', 'xtPTsNECC3KPuMnDu');` and hit enter. If you remove the validation from your remove Method and pass one valid task `_id` from your database, you will be able to remove it.
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step09) 
+> Review: you can check how your code should be at the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step09).
 
-In the next step we are going to run the app on mobile environment as a Native app.
+In the next step, we will run the app on a mobile environment as a Native app.

@@ -4,7 +4,7 @@ title: '11: Testing'
 
 Now we've created a few features for our application, let's add a test to ensure that we don't regress and that it works the way we expect.
 
-We'll write a test which executes one of our Methods and verifies that it works correctly.
+We'll write a test that executes one of our Methods and verifies that it works correctly.
 
 ## 11.1: Install Dependencies
 
@@ -15,7 +15,7 @@ meteor add meteortesting:mocha
 meteor npm install --save-dev chai
 ```
 
-We can now run our app in "test mode" by running meteor test and specifying a test driver package (you'll need to stop the regular app from running, or specify an alternate port with --port XYZ):
+We can now run our app in "test mode" by running `meteor test` and specifying a test driver package (you'll need to stop the regular app from running or specify an alternate port with --port XYZ):
 
 ```
 TEST_WATCH=1 meteor test --driver-package meteortesting:mocha
@@ -31,9 +31,9 @@ simple-todos-react
 2 passing (10ms)
 ```
 
-Where are these two tests coming from? Every new Meteor application includes a `tests/main.js` module containing several example tests using the `describe`, `it`, and `assert` style popularized by testing frameworks like Mocha.
+From where are these two tests coming? Every new Meteor application includes a `tests/main.js` module containing several example tests using the `describe`, `it`, and `assert` style popularized by testing frameworks like Mocha.
 
-> Meteor Mocha integration is maintained by the community, you can read more [here](https://github.com/meteortesting/meteor-mocha)
+> The community maintains Meteor Mocha integration. You can read more [here](https://github.com/meteortesting/meteor-mocha).
 
 When you run with these options, you can also see the results of the tests in the app URL in your browser:
 
@@ -41,7 +41,7 @@ When you run with these options, you can also see the results of the tests in th
 
 ## 11.2: Scaffold Test
 
-However, if you would prefer to split your tests across multiple modules, you can do that too. Add a new test module called `imports/api/tasksMethods.tests.js`.
+However, if you prefer to split your tests across multiple modules, you can do that. Add a new test module called `imports/api/tasksMethods.tests.js`.
 
 `imports/api/tasksMethods.tests.js`
 
@@ -67,7 +67,7 @@ import '/imports/api/tasksMethods.tests.js';
 
 ## 11.3: Prepare Database
 
-In any test you need to ensure the database is in the state we expect before beginning. You can use Mocha's `beforeEach` construct to do that easily:
+You need to ensure the database is in the state we expect before beginning any test. You can use Mocha's `beforeEach` construct to do that easily:
 
 `imports/api/tasksMethods.tests.js`
 
@@ -95,11 +95,11 @@ if (Meteor.isServer) {
 }
 ```
 
-Here you are creating a single task that's associated with a random userId that'll be different for each test run.
+Here you create a single task associated with a random userId that'll be different for each test run.
 
 ## 11.4: Test Task Removal
 
-Now you can write the test to call the `tasks.remove` method as that user and verify the task got deleted, as you are going to test a method and we want to mock the authenticated user you can install this utility package to make your life easier:
+Now you can write the test to call the `tasks.remove` method as that user and verify the task got deleted. As you are going to test a method and we want to mock the authenticated user, you can install this utility package to make your life easier:
 
 ```shell
 meteor add quave:testing
@@ -144,7 +144,7 @@ Remember to import `assert` from `chai` (`import { assert } from 'chai';`)
 
 ## 11.5: More tests
 
-You can add as many tests you want, below you can find a few other tests that can be helpful for you to have more ideas of what to test and how.:
+You can add as many tests as you want. Below you can find a few other tests that can be helpful for you to have more ideas of what to test and how:
 
 `imports/api/tasksMethods.tests.js`
 
@@ -218,7 +218,7 @@ if (Meteor.isServer) {
 
 ```
 
-If you run the test command again or left it running in watch mode before, you should see the following output:
+If you rerun the test command or left it running in watch mode before, you should see the following output:
 
 ```
 Tasks
@@ -234,7 +234,7 @@ Tasks
 
 To make it easier to type the test command, you may want to add a shorthand to the `scripts` section of your `package.json` file.
 
-In fact, new Meteor apps come with a few preconfigured npm scripts, which you are welcome to use or modify.
+New Meteor apps come with a few preconfigured npm scripts, which you are welcome to use or modify.
 
 The standard `meteor npm test` command runs the following command:
 
@@ -242,7 +242,7 @@ The standard `meteor npm test` command runs the following command:
 meteor test --once --driver-package meteortesting:mocha
 ```
 
-This command is suitable for running in a Continuous Integration (CI) environment such as [Travis CI](https://travis-ci.org/) or [CircleCI](https://circleci.com/), since it runs only your server-side tests and then exits with `0` if all the tests passed.
+This command is suitable for running in a Continuous Integration (CI) environment such as [Travis CI](https://travis-ci.org/) or [CircleCI](https://circleci.com/) since it runs only your server-side tests and then exits with `0` if all the tests passed.
 
 If you would like to run your tests while developing your application (and re-run them whenever the development server restarts), consider using `meteor npm run test-app`, which is equivalent to:
 
@@ -250,10 +250,10 @@ If you would like to run your tests while developing your application (and re-ru
 TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha
 ```
 
-This is almost the same as the earlier command, except that it also loads your application code as normal (due to `--full-app`), allowing you to interact with your app in the browser while running both client and server tests.
+This is almost the same as the last command, except that it loads your application code as usual (due to `--full-app`), allowing you to interact with your app in the browser while running client and server tests.
 
 There's a lot more you can do with Meteor tests! You can read more about it in the Meteor Guide [article on testing](https://guide.meteor.com/testing.html).
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze`-tutorial/tree/master/src/simple-todos/step11) 
+> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze`-tutorial/tree/master/src/simple-todos/step11).
 
-In the next step we are going to deploy your app to Galaxy, the best hosting for Meteor apps, developed by the same team behind Meteor.
+In the next step, we will deploy your app to Galaxy, the best hosting for Meteor apps, developed by the same team behind Meteor.

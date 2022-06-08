@@ -2,21 +2,21 @@
 title: "6: Filter tasks"
 ---
 
-In this step, you will filter your tasks by status and show the quantity of pending tasks.
+In this step, you will filter your tasks by status and show the number of pending tasks.
 
 ## 6.1: ReactiveDict
 
-First, you are going to add a button to show or hide the completed tasks from the list.
+First, you will add a button to show or hide the completed tasks from the list.
 
-To keep the state we're going to use the `ReactiveDict`. A ReactiveDict stores an arbitrary set of key-value pairs. Use it to manage the internal state in your components, ie. like the current selected item in a list. To know more about how `ReactiveDict` works, you can click on this [link](https://docs.meteor.com/api/reactive-dict.html), and there you will find everything you need to know and everything you can do with it.
+To keep the state, we will use the `ReactiveDict`, a reactive dictionary which enables us to store an arbitrary set of key-value pairs. Use it to manage the internal state in your components, i.e. the currently selected item in a list. To know more about how `ReactiveDict` works, you can click on this [link](https://docs.meteor.com/api/reactive-dict.html), and there you will find everything you need to know and everything you can do with it.
 
-For now, we just need to install the `reactive-dict` package to our app. Simply run the command below on your app root directory:
+We need to install the `reactive-dict` package in our app. Simply run the command below on your app root directory:
 
 ```shell script
 meteor add reactive-dict
 ```
 
-Next, we need to set up a new `ReactiveDict` and attach it to the `mainContainer` template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as the template renders in the screen:
+Next, we need to set up a new `ReactiveDict` and attach it to the `mainContainer` template instance (as this is where we'll store the button's state) when it is first created. The best place to create our variables is inside the callback `onCreated` of the template that we want to persist our data. This callback is called as soon as the template renders on the screen:
 
 `imports/ui/App.js`
 
@@ -36,7 +36,7 @@ Template.mainContainer.onCreated(function mainContainerOnCreated() {
 ...
 ```
 
-Then, we need an event handler to update the `ReactiveDict` variable when the button is clicked. An event handler takes two arguments, the second of which is the same template instance which was this in the onCreated callback. Also create a new constant called `HIDE_COMPLETED_STRING`, below the imports, that will be used throughout the code as the name of the variable we are persisting:
+Then, we need an event handler to update the `ReactiveDict` variable when the button is clicked. An event handler takes two arguments, the second of which is the same template instance in the onCreated callback. Also, create a new constant called `HIDE_COMPLETED_STRING` below the imports, that will be used throughout the code as the name of the variable we are persisting:
 
 `imports/ui/App.js`
 
@@ -85,7 +85,7 @@ You may notice we're using _if_ (a conditional test) for the first time, and it'
 
 ## 6.2: Button style
 
-You should add some style to your button so it doesn't look gray and dull. You can use the styles below as a reference:
+You should add some style to your button so it doesn't look gray and muted. You can use the styles below as a reference:
 
 `client/main.css`
 
@@ -102,7 +102,7 @@ You should add some style to your button so it doesn't look gray and dull. You c
 
 ## 6.3: Filter Tasks
 
-Now, we need to update `Template.mainContainer.helpers`. The code below verifies if the variable `hideCompleted` is set to `true` and if yes, we filter our query just to get task non completed. We also have a new helper called `hideCompleted` that will help us in the UI well we want to know if we're filtering or not:
+Now, we need to update `Template.mainContainer.helpers`. The code below verifies if the variable `hideCompleted` is set to `true` and if yes, we filter our query to get non completed tasks. We also have a new helper called `hideCompleted` that will help us in the UI where we want to know if we're filtering or not:
 
 `imports/ui/App.js`
 
@@ -132,19 +132,19 @@ Template.mainContainer.helpers({
 
 You can install an extension to visualize the data in your Mini Mongo.
 
-[Meteor DevTools Evolved](https://chrome.google.com/webstore/detail/meteor-devtools-evolved/ibniinmoafhgbifjojidlagmggecmpgf) will help you to debug your app as you can see what data is on Mini Mongo. 
+[Meteor DevTools Evolved](https://chrome.google.com/webstore/detail/meteor-devtools-evolved/ibniinmoafhgbifjojidlagmggecmpgf) will help you to debug your app as you can see what data is on Mini Mongo.
 
 <img width="800px" src="/simple-todos/assets/step06-extension.png"/>
 
-You can also see all the messages that Meteor is sending and receiving from the server, this is useful for you to learn more about how Meteor works.
+You can also see all the messages Meteor sends and receives from the server. This is useful for you to learn more about how Meteor works.
 
 <img width="800px" src="/simple-todos/assets/step06-ddp-messages.png"/>
 
-Install it in your Google Chrome browser using this [link](https://chrome.google.com/webstore/detail/meteor-devtools-evolved/ibniinmoafhgbifjojidlagmggecmpgf).
+Install it in your Google Chrome / Brave browser using this [link](https://chrome.google.com/webstore/detail/meteor-devtools-evolved/ibniinmoafhgbifjojidlagmggecmpgf).
 
 ## 6.5: Pending tasks
 
-Update the `header` in order to show the number of pending tasks in the app bar.
+Update the `header` to show the number of pending tasks in the app bar.
 
 You should avoid adding zero to your app bar when there are no pending tasks.
 
@@ -186,4 +186,4 @@ Your app should look like this:
 
 > Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step06) 
 
-In the next step we are going to include user access in your app.
+In the next step, we will include user access in your app.

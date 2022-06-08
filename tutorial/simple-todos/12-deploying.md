@@ -4,9 +4,9 @@ title: '12: Deploying'
 
 Now your app is tested and ready to be published so anyone can use it.
 
-The best place to run your Meteor app is [Galaxy](https://www.meteor.com/cloud). Galaxy offers free deploy. Cool, right?
+[Galaxy](https://www.meteor.com/cloud) is the best place to run your Meteor app. Galaxy offers free deployment. Cool, right?
 
-> If you have any trouble on this step you should send an email to Galaxy support and they are going to help you, send your message to `support@meteor.com`. Try to explain in details what is the issue and you are going to receive help as soon as possible. Also make sure you include in the subject: `Blaze Tutorial` so you know where are you coming from.
+> If you have any trouble with this step, you should send an email to Galaxy support, and they are going to help you. Send your message to `support@meteor.com`. Try to explain in detail what the issue is, and you will receive help as soon as possible. Also, include the subject: `Blaze Tutorial` so you know from where you are coming.
 
 ## 12.1: Create your account
 
@@ -16,19 +16,19 @@ Go to [cloud.meteor.com](https://cloud.meteor.com?isSignUp=true). You are going 
 
 <img width="500px" src="/simple-todos/assets/step12-sign-up.png"/>
 
-Sign up with GitHub and proceed from there. It's just going to ask you a username and password which you will need to deploy your app.
+Sign up with GitHub and proceed from there. It will ask you for a username and password, which you will need to deploy your app.
 
-Done, your account is created. You can use this account to access [atmospherejs.com](https://atmospherejs.com/), [Forums](https://forums.meteor.com) and much more including Galaxy free deploy.
+Done, you created your account. You can use this account to access [atmospherejs.com](https://atmospherejs.com/), [Forums](https://forums.meteor.com), and much more, including Galaxy free deploy.
 
 ## 12.2: Deploy it
 
-Now you are ready to deploy, make sure you run `meteor npm install` before deploying to make sure all your dependencies are installed.
+Now that you are ready to deploy, make sure you run `meteor npm install` before deploying to ensure you installed all your dependencies.
 
-You also need to choose a sub-domain to publish your app. We are going to use the main domain `meteorapp.com` that is free and included on any Galaxy plan.
+You also need to choose a sub-domain to publish your app. We will use the main domain `meteorapp.com`, which is free and included on any Galaxy plan.
 
-In this example we are going to use `blaze-tutorial.meteorapp.com` but make sure you choose a different domain name, otherwise you are going to receive an error saying it is already used.
+In this example, we will use `blaze-tutorial.meteorapp.com` but make sure you choose a different domain name. Otherwise, you will receive an error saying it is already used.
 
-> You can learn how to use custom domains on Galaxy [here](https://cloud-guide.meteor.com/custom-domains.html). Custom domains are available starting with the Essentials plan. 
+> You can learn how to use custom domains on Galaxy [here](https://cloud-guide.meteor.com/custom-domains.html). Custom domains are available, starting with the Essentials plan.
 
 Run the deploy command:
 
@@ -57,9 +57,9 @@ You have successfully deployed the first version of your app.
 For details, visit https://galaxy.meteor.com/app/blaze-tutorial.meteorapp.com
 ```
 
-This process usually takes around 5 minutes but it depends on your internet speed as it's going to send your app bundle to Galaxy servers. 
+This process usually takes around 5 minutes, but it depends on your internet speed as it will send your app bundle to Galaxy servers.
 
-> Galaxy builds a new Docker image that contains your app bundle and then deploy containers using it, read [more](https://cloud-guide.meteor.com/container-environment.html)
+> Galaxy builds a new Docker image that contains your app bundle and then deploys containers using it. Read [more](https://cloud-guide.meteor.com/container-environment.html).
 
 You can check your logs on Galaxy, including the part that Galaxy is building your Docker image and deploying it.
 
@@ -67,12 +67,12 @@ You can check your logs on Galaxy, including the part that Galaxy is building yo
 
 Now you should be able to access your Galaxy dashboard at `https://galaxy.meteor.com/app/blaze-tutorial.meteorapp.com` (replacing `blaze-tutorial` with your sub-domain)
 
-And, of course, be able to access and use your app in the domain that you chose, in our case here [blaze-tutorial.meteorapp.com](http://blaze-tutorial.meteorapp.com). Congrats!
+And, of course, be able to access and use your app in the chosen domain, in our case here [blaze-tutorial.meteorapp.com](http://blaze-tutorial.meteorapp.com). Congrats!
 
-> We deployed to Galaxy running in the US (us-east-1), we also have Galaxy running in other regions in the world, check the list [here](https://cloud-guide.meteor.com/deploy-region.html) 
+> We deployed to Galaxy running in the US (us-east-1). We also have Galaxy running in other regions in the world. Check the list [here](https://cloud-guide.meteor.com/deploy-region.html).
 
-This is huge, you have your Meteor app running on Galaxy, ready to be used by anyone in the world!
+This is huge. You have your Meteor app running on Galaxy, ready to be used by anyone in the world!
 
-> Review: you can check how your code should be in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step12) 
+> Review: you can check how your code should be at the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step12).
 
-In the next step we are going to provide some ideas for you to continue developing your app.
+In the next step, we will provide some ideas for you to continue developing your app.
