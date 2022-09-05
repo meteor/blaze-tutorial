@@ -38,7 +38,7 @@ Template.mainContainer.events({
 });
 
 Template.mainContainer.helpers({
-  tasks() {
+  async tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
 
@@ -48,26 +48,26 @@ Template.mainContainer.helpers({
       return [];
     }
 
-    return TasksCollection.find(
+    return await TasksCollection.find(
       hideCompleted ? pendingOnlyFilter : userFilter,
       {
         sort: { createdAt: -1 },
       }
-    ).fetch();
+    ).fetchAsync();
   },
   hideCompleted() {
     return Template.instance().state.get(HIDE_COMPLETED_STRING);
   },
-  incompleteCount() {
+  async incompleteCount() {
     if (!isUserLogged()) {
       return '';
     }
 
     const { pendingOnlyFilter } = getTasksFilter();
 
-    const incompleteTasksCount = TasksCollection.find(
+    const incompleteTasksCount = await TasksCollection.find(
       pendingOnlyFilter
-    ).count();
+    ).countAsync();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
   isUserLogged() {
@@ -79,7 +79,7 @@ Template.mainContainer.helpers({
 });
 
 Template.form.events({
-  'submit .task-form'(event) {
+  async 'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -88,7 +88,7 @@ Template.form.events({
     const text = target.text.value;
 
     // Insert a task into the collection
-    TasksCollection.insert({
+    await TasksCollection.insertAsync({
       text,
       userId: getUser()._id,
       createdAt: new Date(), // current time
