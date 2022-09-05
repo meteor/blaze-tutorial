@@ -5,7 +5,7 @@ import '/imports/api/tasksMethods';
 import '/imports/api/tasksPublications';
 
 const insertTask = async (taskText, user) =>
-  TasksCollection.insertAsync({
+  await TasksCollection.insertAsync({
     text: taskText,
     userId: user._id,
     createdAt: new Date(),
