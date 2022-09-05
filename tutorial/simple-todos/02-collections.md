@@ -40,10 +40,11 @@ You don't need to keep the old content of `server/main.js`.
 import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from '/imports/api/TasksCollection';
 
-const insertTask = taskText => TasksCollection.insert({ text: taskText });
- 
-Meteor.startup(() => {
-  if (TasksCollection.find().count() === 0) {
+const insertTask = async (taskText) =>
+  await TasksCollection.insertAsync({ text: taskText });
+
+Meteor.startup(async () => {
+  if (TasksCollection.find().countAsync() === 0) {
     [
       'First Task',
       'Second Task',
@@ -51,8 +52,8 @@ Meteor.startup(() => {
       'Fourth Task',
       'Fifth Task',
       'Sixth Task',
-      'Seventh Task'
-    ].forEach(insertTask)
+      'Seventh Task',
+    ].forEach(insertTask);
   }
 });
 ```
