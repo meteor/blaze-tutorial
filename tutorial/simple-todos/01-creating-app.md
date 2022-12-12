@@ -12,7 +12,7 @@ Install the latest official Meteor release [following the steps in our docs](htt
 The easiest way to set up Meteor with Blaze is by using the command `meteor create` with the option `--blaze` and your project name:
 
 ```
-meteor create --blaze simple-todos-blaze
+meteor create --blaze simple-todos-blaze --prototype
 ```
 
 After this, Meteor will create all the necessary files for you.
