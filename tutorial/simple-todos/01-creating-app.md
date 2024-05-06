@@ -200,7 +200,7 @@ You should also add the package [`dev-error-overlay`](https://atmospherejs.com/m
 meteor add dev-error-overlay
 ```
 
-You can try to make some mistakes and then you are going to see the errors in the browser and not only in the console.
+You can try to make some mistakes and then you are going to see the errors in the browser as well as in the console.
 
 > Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01).
 
