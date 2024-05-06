@@ -160,7 +160,7 @@ Let's see how your app is looking on mobile. You can simulate a mobile environme
 
 <img width="500px" src="/simple-todos/assets/step01-dev-tools-mobile-toggle.png"/>
 
-Click on it and then select the phone that you want to simulate and in the top nav bar.
+Click on it and then select the phone that you want to simulate from the top nav bar.
 
 > You can also check your app in your personal cellphone. To do so, connect to your App using your local IP in the navigation browser of your mobile browser.
 >
