@@ -160,7 +160,7 @@ Let's see how your app is looking on mobile. You can simulate a mobile environme
 
 <img width="500px" src="/simple-todos/assets/step01-dev-tools-mobile-toggle.png"/>
 
-Click on it and then select the phone that you want to simulate and in the top nav bar.
+Click on it and then select the phone that you want to simulate from the top nav bar.
 
 > You can also check your app in your personal cellphone. To do so, connect to your App using your local IP in the navigation browser of your mobile browser.
 >
@@ -200,7 +200,7 @@ You should also add the package [`dev-error-overlay`](https://atmospherejs.com/m
 meteor add dev-error-overlay
 ```
 
-You can try to make some mistakes and then you are going to see the errors in the browser and not only in the console.
+You can try to make some mistakes and then you are going to see the errors in the browser as well as in the console.
 
 > Review: you can check how your code should look in the end of this step [here](https://github.com/meteor/blaze-tutorial/tree/master/src/simple-todos/step01).
 
