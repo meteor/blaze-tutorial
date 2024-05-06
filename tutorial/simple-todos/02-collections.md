@@ -6,7 +6,7 @@ Meteor already sets up MongoDB for you. In order to use our database we need to 
 
 > You can read more about collections [here](http://guide.meteor.com/collections.html).
 
-In this step we will implement all the necessary code to have a basic collection for our tasks up and running.
+In this step we will implement all the necessary code to have a basic collection for our tasks, up and running.
 
 ## 2.1: Create Tasks Collection
 
