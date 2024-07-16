@@ -137,44 +137,44 @@ Only the owner of a task should be able to change certain things. You should cha
 `imports/api/tasksMethods.js`
 
 ```js
-..
-  'tasks.remove'(taskId) {
-    check(taskId, String);
+...
+    async 'tasks.remove'(taskId) {
+      check(taskId, String);
+    
+      if (!this.userId) {
+        throw new Meteor.Error('Not authorized.');
+      }
+    
+      const task = await TasksCollection.findOneAsync({ _id: taskId, userId: this.userId });
+    
+      if (!task) {
+        throw new Meteor.Error('Access denied.');
+      }
+    
+      await TasksCollection.removeAsync(taskId);
+    },
 
-    if (!this.userId) {
-      throw new Meteor.Error('Not authorized.');
-    }
-
-    const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
-
-    if (!task) {
-      throw new Meteor.Error('Access denied.');
-    }
-
-    TasksCollection.remove(taskId);
-  },
-
-  'tasks.setIsChecked'(taskId, isChecked) {
-    check(taskId, String);
-    check(isChecked, Boolean);
-
-    if (!this.userId) {
-      throw new Meteor.Error('Not authorized.');
-    }
-
-    const task = TasksCollection.findOne({ _id: taskId, userId: this.userId });
-
-    if (!task) {
-      throw new Meteor.Error('Access denied.');
-    }
-
-    TasksCollection.update(taskId, {
-      $set: {
-        isChecked,
-      },
-    });
-  },
-..
+    async 'tasks.setIsChecked'(taskId, isChecked) {
+      check(taskId, String);
+      check(isChecked, Boolean);
+    
+      if (!this.userId) {
+        throw new Meteor.Error('Not authorized.');
+      }
+    
+      const task = await TasksCollection.findOneAsync({ _id: taskId, userId: this.userId });
+    
+      if (!task) {
+        throw new Meteor.Error('Access denied.');
+      }
+    
+      await TasksCollection.updateAsync(taskId, {
+        $set: {
+          isChecked,
+        },
+      });
+    },
+...
 ```
 
 Why is this important if we are not returning tasks from other users in the client?
