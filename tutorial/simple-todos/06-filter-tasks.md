@@ -110,18 +110,15 @@ Now, we need to update `Template.mainContainer.helpers`. The code below verifies
 ...
 
 Template.mainContainer.helpers({
-  tasks() {
+  async tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
 
     const hideCompletedFilter = { isChecked: { $ne: true } };
 
-    return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
+    return await TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
       sort: { createdAt: -1 },
-    }).fetch();
-  },
-  hideCompleted() {
-    return Template.instance().state.get(HIDE_COMPLETED_STRING);
+    }).fetchAsync();
   },
 });
 
@@ -154,8 +151,10 @@ You should avoid adding zero to your app bar when there are no pending tasks.
 
 Template.mainContainer.helpers({
   ...,
-  incompleteCount() {
-    const incompleteTasksCount = TasksCollection.find({ isChecked: { $ne: true } }).count();
+  async incompleteCount() {
+    const incompleteTasksCount = await TasksCollection.find({
+      isChecked: { $ne: true },
+    }).countAsync();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
 });
