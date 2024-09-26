@@ -75,7 +75,7 @@ Now we need to add a listener to the `submit` event on the form:
 ```js
 ...
   tasks() {
-    return TasksCollection.find({}, { sort: { createdAt: -1 } });
+    return TasksCollection.find({});
   },
 });
 
