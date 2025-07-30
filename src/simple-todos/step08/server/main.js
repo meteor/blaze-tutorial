@@ -3,8 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import { TasksCollection } from '/imports/db/TasksCollection';
 import '/imports/api/tasksMethods';
 
-const insertTask = (taskText, user) =>
-  TasksCollection.insert({
+const insertTask = async (taskText, user) =>
+  await TasksCollection.insertAsync({
     text: taskText,
     userId: user._id,
     createdAt: new Date(),
@@ -13,7 +13,7 @@ const insertTask = (taskText, user) =>
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 
-Meteor.startup(() => {
+Meteor.startup(async () => {
   if (!Accounts.findUserByUsername(SEED_USERNAME)) {
     Accounts.createUser({
       username: SEED_USERNAME,
@@ -23,7 +23,7 @@ Meteor.startup(() => {
 
   const user = Accounts.findUserByUsername(SEED_USERNAME);
 
-  if (TasksCollection.find().count() === 0) {
+  if (await TasksCollection.find().countAsync() === 0) {
     [
       'First Task',
       'Second Task',

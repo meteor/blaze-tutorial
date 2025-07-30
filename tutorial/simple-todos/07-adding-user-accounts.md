@@ -252,8 +252,8 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { TasksCollection } from '/imports/api/TasksCollection';
 
-const insertTask = (taskText, user) =>
-  TasksCollection.insert({
+const insertTask = async (taskText, user) =>
+  TasksCollection.insertAsync({
     text: taskText,
     userId: user._id,
     createdAt: new Date(),
@@ -262,7 +262,7 @@ const insertTask = (taskText, user) =>
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 
-Meteor.startup(() => {
+Meteor.startup(async () => {
   if (!Accounts.findUserByUsername(SEED_USERNAME)) {
     Accounts.createUser({
       username: SEED_USERNAME,
@@ -272,7 +272,7 @@ Meteor.startup(() => {
 
   const user = Accounts.findUserByUsername(SEED_USERNAME);
 
-  if (TasksCollection.find().count() === 0) {
+  if (await TasksCollection.find().countAsync() === 0) {
     [
       'First Task',
       'Second Task',
@@ -311,7 +311,7 @@ const getTasksFilter = () => {
 ...
 
 Template.mainContainer.helpers({
-  tasks() {
+  async tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
 
@@ -321,19 +321,24 @@ Template.mainContainer.helpers({
       return [];
     }
 
-    return TasksCollection.find(hideCompleted ? pendingOnlyFilter : userFilter, {
-      sort: { createdAt: -1 },
-    }).fetch();
+    return await TasksCollection.find(
+      hideCompleted ? pendingOnlyFilter : userFilter,
+      {
+        sort: { createdAt: -1 },
+      }
+    ).fetchAsync();
   },
   ...,
-  incompleteCount() {
+  async incompleteCount() {
     if (!isUserLogged()) {
       return '';
     }
 
     const { pendingOnlyFilter } = getTasksFilter();
 
-    const incompleteTasksCount = TasksCollection.find(pendingOnlyFilter).count();
+    const incompleteTasksCount = await TasksCollection.find(
+      pendingOnlyFilter
+    ).countAsync();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
   ...
@@ -346,9 +351,9 @@ Also, update the `insert` call to include the field `userId` when creating a new
 ```js
 ...
 Template.form.events({
-  "submit .task-form"(event) {
+  async "submit .task-form"(event) {
    ...
-    TasksCollection.insert({
+    await TasksCollection.insertAsync({
       text,
       userId: getUser()._id,
       createdAt: new Date(), // current time

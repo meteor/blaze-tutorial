@@ -9,7 +9,7 @@ Template.mainContainer.helpers({
 });
 
 Template.form.events({
-  'submit .task-form'(event) {
+ async 'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -18,7 +18,7 @@ Template.form.events({
     const text = target.text.value;
 
     // Insert a task into the collection
-    TasksCollection.insert({
+    await TasksCollection.insertAsync({
       text,
       createdAt: new Date(), // current time
     });

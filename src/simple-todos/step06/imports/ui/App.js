@@ -18,29 +18,29 @@ Template.mainContainer.events({
 });
 
 Template.mainContainer.helpers({
-  tasks() {
+  async tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
 
     const hideCompletedFilter = { isChecked: { $ne: true } };
 
-    return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
+    return await TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
       sort: { createdAt: -1 },
-    }).fetch();
+    }).fetchAsync();
   },
   hideCompleted() {
     return Template.instance().state.get(HIDE_COMPLETED_STRING);
   },
-  incompleteCount() {
-    const incompleteTasksCount = TasksCollection.find({
+  async incompleteCount() {
+    const incompleteTasksCount = await TasksCollection.find({
       isChecked: { $ne: true },
-    }).count();
+    }).countAsync();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
 });
 
 Template.form.events({
-  'submit .task-form'(event) {
+  async 'submit .task-form'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -49,7 +49,7 @@ Template.form.events({
     const text = target.text.value;
 
     // Insert a task into the collection
-    TasksCollection.insert({
+    await TasksCollection.insertAsync({
       text,
       createdAt: new Date(), // current time
     });
